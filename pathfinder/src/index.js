@@ -6,6 +6,7 @@ import UserLogin from "./pages/user/UserLogin";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
+import UserJobs from "./pages/user/UserJobs";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "userHome",
     element: <UserHome />,
+  },
+  {
+    path: "userJobs",
+    element: <UserJobs />,
   },
 ]);
 
