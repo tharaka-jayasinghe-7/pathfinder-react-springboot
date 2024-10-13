@@ -8,10 +8,12 @@ import CompanyRegister from "./pages/company/CompanyRegister"; // Import Company
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
-
 import UserJobs from "./pages/user/UserJobs";
-
+import UserViewJob from "./pages/user/UserViewJob";
 import CompanyHome from "./pages/company/CompanyHome";
+import UserRegister from "./pages/user/UserRegister";
+import UserGuideMe from "./pages/user/UserGuideMe";
+import UserFindCourse from "./pages/user/UserFindCourse";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
     element: <UserLogin />,
   },
   {
+    path: "userRegister",
+    element: <UserRegister />,
+  },
+  {
     path: "companyLogin",
     element: <CompanyLogin />,
   },
@@ -31,8 +37,20 @@ const router = createBrowserRouter([
     element: <UserHome />,
   },
   {
+    path: "userGuideMe",
+    element: <UserGuideMe />,
+  },
+  {
+    path: "userFindCourse",
+    element: <UserFindCourse />,
+  },
+  {
     path: "userJobs",
     element: <UserJobs />,
+  },
+  {
+    path: "userViewJob",
+    element: <UserViewJob />,
   },
   {
     path: "companyHome",

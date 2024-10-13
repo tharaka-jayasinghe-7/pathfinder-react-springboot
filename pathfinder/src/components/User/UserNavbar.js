@@ -24,24 +24,28 @@ const UserNavbar = () => {
 
         {/* Center Menu Items */}
         <div className="flex flex-grow justify-center space-x-6">
-          {["Home", "Guide Me", "Jobs", "My Jobs", "Notifications"].map(
-            (item) => (
-              <div key={item} className="relative">
-                <Link
-                  to={item === "Jobs" ? "/userJobs" : "#"}
-                  className={`text-white hover:text-gray-300 ${
-                    activeItem === item ? "text-orange-500" : ""
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  {item}
-                </Link>
-                {activeItem === item && (
-                  <div className="absolute inset-x-0 bottom-0 h-1 bg-orange-500"></div>
-                )}
-              </div>
-            )
-          )}
+          {[
+            { name: "Home", path: "/userHome" },
+            { name: "Guide Me", path: "/userGuideMe" },
+            { name: "Jobs", path: "/userJobs" },
+            { name: "My Jobs", path: "/myJobs" },
+            { name: "Notifications", path: "/notifications" },
+          ].map((item) => (
+            <div key={item.name} className="relative">
+              <Link
+                to={item.path} // Assign corresponding path
+                className={`text-white hover:text-gray-300 ${
+                  activeItem === item.name ? "text-orange-500" : ""
+                }`}
+                onClick={() => handleItemClick(item.name)}
+              >
+                {item.name}
+              </Link>
+              {activeItem === item.name && (
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-orange-500"></div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </nav>
