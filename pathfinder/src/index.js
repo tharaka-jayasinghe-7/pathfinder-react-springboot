@@ -13,7 +13,6 @@ import UserJobs from "./pages/user/UserJobs";
 
 import CompanyHome from "./pages/company/CompanyHome";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,17 +31,16 @@ const router = createBrowserRouter([
     element: <UserHome />,
   },
   {
-
     path: "userJobs",
     element: <UserJobs />,
-
+  },
+  {
     path: "companyHome",
     element: <CompanyHome />,
   },
   {
     path: "companyRegister", // Add this route for company registration
     element: <CompanyRegister />,
-
   },
 ]);
 
