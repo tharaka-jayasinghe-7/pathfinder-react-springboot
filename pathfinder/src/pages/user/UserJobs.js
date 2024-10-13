@@ -1,5 +1,5 @@
 import React from "react";
-import UserNavbar from "../../components/User/UserNavbar";
+import UserNavbar from "../../components/user/UserNavbar";
 import hotelImage from "../../images/landing/hotel1.jpg";
 import vImage from "../../images/landing/v_img.jpg";
 
