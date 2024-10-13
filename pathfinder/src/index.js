@@ -8,7 +8,11 @@ import CompanyRegister from "./pages/company/CompanyRegister"; // Import Company
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
+
+import UserJobs from "./pages/user/UserJobs";
+
 import CompanyHome from "./pages/company/CompanyHome";
+
 
 const router = createBrowserRouter([
   {
@@ -28,12 +32,17 @@ const router = createBrowserRouter([
     element: <UserHome />,
   },
   {
+
+    path: "userJobs",
+    element: <UserJobs />,
+
     path: "companyHome",
     element: <CompanyHome />,
   },
   {
     path: "companyRegister", // Add this route for company registration
     element: <CompanyRegister />,
+
   },
 ]);
 
