@@ -3,9 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import UserLogin from "./pages/user/UserLogin";
+import CompanyLogin from "./pages/company/CompanyLogin";
+import CompanyRegister from "./pages/company/CompanyRegister"; // Import CompanyRegister
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
+import CompanyHome from "./pages/company/CompanyHome";
 
 const router = createBrowserRouter([
   {
@@ -17,8 +20,20 @@ const router = createBrowserRouter([
     element: <UserLogin />,
   },
   {
+    path: "companyLogin",
+    element: <CompanyLogin />,
+  },
+  {
     path: "userHome",
     element: <UserHome />,
+  },
+  {
+    path: "companyHome",
+    element: <CompanyHome />,
+  },
+  {
+    path: "companyRegister", // Add this route for company registration
+    element: <CompanyRegister />,
   },
 ]);
 
