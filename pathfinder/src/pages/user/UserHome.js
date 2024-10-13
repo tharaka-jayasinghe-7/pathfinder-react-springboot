@@ -4,7 +4,7 @@ import hotelLogo from "../../images/landing/galadari_logo.jpg";
 import vLogo from "../../images/landing/volkswagen_logo.jpg";
 import vImage from "../../images/landing/v_img.jpg";
 import profPic from "../../images/landing/profile_pic.jpg";
-import UserNavbar from "../../components/User/UserNavbar";
+import UserNavbar from "../../components/user/UserNavbar";
 
 const UserHome = () => {
   const companies = [
