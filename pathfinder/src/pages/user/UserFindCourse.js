@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UserNavbar from "../../components/user/UserNavbar"; // Adjust based on your folder structure
+import { useNavigate } from "react-router-dom";
 
 const UserFindCourse = () => {
   const [industry, setIndustry] = useState("Automobile");
@@ -22,6 +23,8 @@ const UserFindCourse = () => {
     // Add your back logic here (e.g., navigate back)
     console.log("Back button clicked");
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 mt-6">
@@ -104,6 +107,7 @@ const UserFindCourse = () => {
             {/* Buttons */}
             <div className="flex justify-center space-x-2">
               <button
+                onClick={() => navigate("/userViewCourses")}
                 type="submit"
                 className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-md"
               >

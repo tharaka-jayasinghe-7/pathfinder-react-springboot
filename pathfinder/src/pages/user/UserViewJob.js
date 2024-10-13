@@ -1,8 +1,10 @@
 import React from "react";
 import hotelImage from "../../images/landing/hotel1.jpg";
 import UserNavbar from "../../components/user/UserNavbar";
+import { useNavigate } from "react-router-dom";
 
 const UserViewJob = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
       <UserNavbar />
@@ -53,7 +55,10 @@ const UserViewJob = () => {
 
           {/* Buttons */}
           <div className="mt-6 flex justify-center space-x-2">
-            <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+            <button
+              onClick={() => navigate("/userApplyJob")}
+              className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
+            >
               Apply Job
             </button>
             <button className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">

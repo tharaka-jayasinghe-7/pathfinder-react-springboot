@@ -14,6 +14,10 @@ import CompanyHome from "./pages/company/CompanyHome";
 import UserRegister from "./pages/user/UserRegister";
 import UserGuideMe from "./pages/user/UserGuideMe";
 import UserFindCourse from "./pages/user/UserFindCourse";
+import UserViewCourses from "./pages/user/UserViewCourses";
+import UserMyJobs from "./pages/user/UserMyJobs";
+import UserNotifications from "./pages/user/UserNotifications";
+import UserApplyJob from "./pages/user/UserApplyJob";
 
 const router = createBrowserRouter([
   {
@@ -45,12 +49,28 @@ const router = createBrowserRouter([
     element: <UserFindCourse />,
   },
   {
+    path: "userViewCourses",
+    element: <UserViewCourses />,
+  },
+  {
     path: "userJobs",
     element: <UserJobs />,
   },
   {
     path: "userViewJob",
     element: <UserViewJob />,
+  },
+  {
+    path: "userMyJobs",
+    element: <UserMyJobs />,
+  },
+  {
+    path: "userNotifications",
+    element: <UserNotifications />,
+  },
+  {
+    path: "userApplyJob",
+    element: <UserApplyJob />,
   },
   {
     path: "companyHome",

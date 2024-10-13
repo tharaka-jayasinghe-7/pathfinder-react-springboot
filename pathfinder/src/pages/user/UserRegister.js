@@ -31,7 +31,7 @@ const UserRegister = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md my-3">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-xl my-3 mt-8 mb-16">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
 
         <div className="flex flex-col items-center mb-6">
