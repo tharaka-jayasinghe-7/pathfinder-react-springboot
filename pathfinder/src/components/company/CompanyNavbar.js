@@ -1,5 +1,3 @@
-// components/company/CompanyNavbar.js
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import pathfinderLogo from "../../images/landing/logo.png";
@@ -22,8 +20,8 @@ const CompanyNavbar = () => {
           />
         </a>
 
-        {/* Center Menu Items */}
-        <div className="flex flex-grow justify-center space-x-6">
+        {/* Align Menu Items to the Right */}
+        <div className="flex flex-grow justify-end space-x-6 mr-4">
           {["Home", "Job", "Notification", "About Us"].map((item) => (
             <div key={item} className="relative">
               <Link
