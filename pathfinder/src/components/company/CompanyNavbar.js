@@ -20,19 +20,20 @@ const CompanyNavbar = () => {
           />
         </a>
 
-        {/* Align Menu Items to the Right */}
         <div className="flex flex-grow justify-end space-x-6 mr-4">
           {["Home", "Job", "Notification", "About Us"].map((item) => (
             <div key={item} className="relative">
               <Link
                 to={
                   item === "Job"
-                    ? "/companyJob" // Updated path for CompanyJob
+                    ? "/companyJob"
                     : item === "About Us"
                     ? "/about-us"
                     : item === "Home"
                     ? "/companyHome"
-                    : "#" // Fallback for any other item
+                    : item === "Notification"
+                    ? "/companyNot" // Link to the notification page
+                    : "#"
                 }
                 className={`text-white hover:text-gray-300 ${
                   activeItem === item ? "text-orange-500" : ""

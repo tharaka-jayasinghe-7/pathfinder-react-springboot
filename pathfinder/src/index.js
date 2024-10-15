@@ -1,20 +1,21 @@
-// index.js
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import UserLogin from "./pages/user/UserLogin";
 import CompanyLogin from "./pages/company/CompanyLogin";
-import CompanyRegister from "./pages/company/CompanyRegister"; // Import CompanyRegister
-import ViewProfile from "./pages/company/ViewProfile"; // Import ViewProfile
-import AboutUs from "./pages/company/Aboutus"; // Import AboutUs
-import CompanyJob from "./pages/company/CompanyJob"; // Import CompanyJob
+import CompanyRegister from "./pages/company/CompanyRegister";
+import ViewProfile from "./pages/company/ViewProfile";
+import AboutUs from "./pages/company/Aboutus";
+import CompanyJob from "./pages/company/CompanyJob";
+import CompanyHome from "./pages/company/CompanyHome";
+import CompanyNot from "./pages/company/CompanyNot"; // Import the CompanyNot component
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
 import UserJobs from "./pages/user/UserJobs";
-import CompanyHome from "./pages/company/CompanyHome"; // Import CompanyHome
+import CompanyAddJob from "./pages/company/CompanyAddJob";
+import CompanyUpdateJob from "./pages/company/CompanyUpdateJob";
 
 const router = createBrowserRouter([
   {
@@ -38,24 +39,36 @@ const router = createBrowserRouter([
     element: <UserJobs />,
   },
   {
-    path: "companyHome", // Make sure this path matches exactly with the navigate function
+    path: "companyHome",
     element: <CompanyHome />,
   },
   {
-    path: "companyRegister", // Route for company registration
+    path: "companyRegister",
     element: <CompanyRegister />,
   },
   {
-    path: "viewProfile", // Route for viewing profiles
+    path: "viewProfile",
     element: <ViewProfile />,
   },
   {
-    path: "about-us", // Route for About Us
+    path: "about-us",
     element: <AboutUs />,
   },
   {
-    path: "companyJob", // Add route for the company jobs page
-    element: <CompanyJob />, // Reference the CompanyJob component
+    path: "companyJob",
+    element: <CompanyJob />,
+  },
+  {
+    path: "companyNot", // Route for Company Notifications
+    element: <CompanyNot />, // Reference the CompanyNot component
+  },
+  {
+    path: "companyAddJob", // New route for adding a job
+    element: <CompanyAddJob />, // Reference the CompanyAddJob component
+  },
+  {
+    path: "companyUpdateJob/:jobId", // Updated route with dynamic jobId
+    element: <CompanyUpdateJob />, // Reference the CompanyUpdateJob component
   },
 ]);
 

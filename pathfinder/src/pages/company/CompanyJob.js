@@ -33,6 +33,16 @@ function CompanyJob() {
     navigate(`/jobs/${jobId}`); // Navigate to the job details page
   };
 
+  // Function to handle the "Add Job" button click
+  const handleAddJob = () => {
+    navigate("/companyAddJob"); // Navigate to the CompanyAddJob page
+  };
+
+  // Function to handle the "Update Job" button click
+  const handleUpdateJob = (jobId) => {
+    navigate(`/companyUpdateJob/${jobId}`); // Navigate to the CompanyUpdateJob page with jobId
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       {/* Company Navbar */}
@@ -40,7 +50,10 @@ function CompanyJob() {
 
       {/* Adjusted Add Job Button */}
       <div className="fixed top-20 right-8">
-        <button className="bg-orange-500 text-white rounded-lg px-6 py-3 hover:bg-orange-600">
+        <button
+          className="bg-orange-500 text-white rounded-lg px-6 py-3 hover:bg-orange-600"
+          onClick={handleAddJob} // Add onClick handler to navigate to Add Job page
+        >
           Add Job
         </button>
       </div>
@@ -72,7 +85,10 @@ function CompanyJob() {
                   >
                     View Job
                   </button>
-                  <button className="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700">
+                  <button
+                    className="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700"
+                    onClick={() => handleUpdateJob(job.id)} // Add navigation to Update Job button
+                  >
                     Update Job
                   </button>
                   <button className="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-red-700">
