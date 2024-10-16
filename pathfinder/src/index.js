@@ -16,6 +16,8 @@ import UserHome from "./pages/user/UserHome";
 import UserJobs from "./pages/user/UserJobs";
 import CompanyAddJob from "./pages/company/CompanyAddJob";
 import CompanyUpdateJob from "./pages/company/CompanyUpdateJob";
+import CompanyPackage from "./pages/company/CompanyPackage";
+import CompanyPayment from "./pages/company/CompanyPayment";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
   {
     path: "companyUpdateJob/:jobId", // Updated route with dynamic jobId
     element: <CompanyUpdateJob />, // Reference the CompanyUpdateJob component
+  },
+  {
+    path: "companyPackage", // Route for Company Packages
+    element: <CompanyPackage />, // Reference the CompanyPackage component
+  },
+  {
+    path: "companyPayment", // Route for Company Payment
+    element: <CompanyPayment />, // Reference the CompanyPayment component
   },
 ]);
 

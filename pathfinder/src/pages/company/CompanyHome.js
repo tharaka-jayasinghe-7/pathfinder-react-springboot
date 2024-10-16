@@ -67,7 +67,10 @@ const CompanyHome = () => {
         <h2 className="text-lg font-semibold">Galadari Hotel</h2>
         <p className="text-gray-600 mb-6">Excellence in Hospitality</p>
         {/* Try Premium Button */}
-        <button className="bg-yellow-500 text-white py-2 px-6 rounded-lg mb-4">
+        <button
+          className="bg-yellow-500 text-white py-2 px-6 rounded-lg mb-4"
+          onClick={() => navigate("/companyPackage")} // Navigate to CompanyPackage page
+        >
           Try Premium
         </button>
         <button
