@@ -58,7 +58,7 @@ const UserNotifications = () => {
                   </p>
                 </div>
                 <button
-                  className="mt-4 md:mt-0 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-600"
+                  className="mt-4 md:mt-0 bg-teal-600 text-white px-4 py-2 rounded hover:bg-red-600"
                   onClick={() =>
                     alert("Cleared notification for: " + notification.jobTitle)
                   }

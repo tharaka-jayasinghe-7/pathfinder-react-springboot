@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from react-router-dom
 import pathfinderLogo from "../../images/landing/logo.png";
+import userProfileImage from "../../images/landing/profile_pic.jpg"; // Import user profile image
 
 const UserNavbar = () => {
   // Get the current route path using useLocation
@@ -35,6 +36,7 @@ const UserNavbar = () => {
   return (
     <nav className="bg-teal-700 p-4 fixed top-0 left-0 w-full z-50">
       <div className="flex justify-between items-center w-full">
+        {/* Logo on the left */}
         <Link to="/userHome" className="flex items-center">
           <img
             src={pathfinderLogo}
@@ -67,6 +69,17 @@ const UserNavbar = () => {
               )}
             </div>
           ))}
+        </div>
+
+        {/* Profile Image on the right */}
+        <div className="flex items-center">
+          <Link to="/userProfile">
+            <img
+              src={userProfileImage}
+              alt="User Profile"
+              className="w-10 h-10 rounded-full border-1 border-white ml-4 mr-4" // Circle with border
+            />
+          </Link>
         </div>
       </div>
     </nav>

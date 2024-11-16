@@ -5,6 +5,7 @@ const UserMyJobs = () => {
   // Sample data for the jobs
   const jobs = [
     {
+      id: 1,
       companyName: "XTR Enterprises",
       jobTitle: "Welder needed",
       jobDate: "18.06.2024",
@@ -13,6 +14,7 @@ const UserMyJobs = () => {
       appliedDate: "20.06.2024",
     },
     {
+      id: 2,
       companyName: "XTR Company",
       jobTitle: "We are hiring welders",
       jobDate: "18.06.2024",
@@ -21,6 +23,7 @@ const UserMyJobs = () => {
       appliedDate: "20.06.2024",
     },
     {
+      id: 3,
       companyName: "MAGA",
       jobTitle: "We need welders",
       jobDate: "18.06.2024",
@@ -29,6 +32,7 @@ const UserMyJobs = () => {
       appliedDate: "20.06.2024",
     },
     {
+      id: 4,
       companyName: "Minecrafts PVT LTD",
       jobTitle: "Vacancy for welders",
       jobDate: "18.06.2024",
@@ -47,9 +51,9 @@ const UserMyJobs = () => {
       <div className="bg-gray-100">
         <div className="max-w-7xl mx-auto p-4 ">
           <div className="space-y-4 mt-32 mb-16">
-            {jobs.map((job, index) => (
+            {jobs.map((job) => (
               <div
-                key={index}
+                key={job.id}
                 className="bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row justify-between items-center"
               >
                 <div className="flex-1">
