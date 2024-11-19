@@ -8,11 +8,16 @@ import CompanyRegister from "./pages/company/CompanyRegister"; // Import Company
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
-
 import UserJobs from "./pages/user/UserJobs";
-
+import UserViewJob from "./pages/user/UserViewJob";
 import CompanyHome from "./pages/company/CompanyHome";
-
+import UserRegister from "./pages/user/UserRegister";
+import UserGuideMe from "./pages/user/UserGuideMe";
+import UserFindCourse from "./pages/user/UserFindCourse";
+import UserViewCourses from "./pages/user/UserViewCourses";
+import UserMyJobs from "./pages/user/UserMyJobs";
+import UserNotifications from "./pages/user/UserNotifications";
+import UserApplyJob from "./pages/user/UserApplyJob";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +29,10 @@ const router = createBrowserRouter([
     element: <UserLogin />,
   },
   {
+    path: "userRegister",
+    element: <UserRegister />,
+  },
+  {
     path: "companyLogin",
     element: <CompanyLogin />,
   },
@@ -32,17 +41,44 @@ const router = createBrowserRouter([
     element: <UserHome />,
   },
   {
-
+    path: "userGuideMe",
+    element: <UserGuideMe />,
+  },
+  {
+    path: "userFindCourse",
+    element: <UserFindCourse />,
+  },
+  {
+    path: "userViewCourses",
+    element: <UserViewCourses />,
+  },
+  {
     path: "userJobs",
     element: <UserJobs />,
-
+  },
+  {
+    path: "userViewJob",
+    element: <UserViewJob />,
+  },
+  {
+    path: "userMyJobs",
+    element: <UserMyJobs />,
+  },
+  {
+    path: "userNotifications",
+    element: <UserNotifications />,
+  },
+  {
+    path: "userApplyJob",
+    element: <UserApplyJob />,
+  },
+  {
     path: "companyHome",
     element: <CompanyHome />,
   },
   {
     path: "companyRegister", // Add this route for company registration
     element: <CompanyRegister />,
-
   },
 ]);
 
