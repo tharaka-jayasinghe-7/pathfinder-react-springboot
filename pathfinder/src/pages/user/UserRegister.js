@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import axios from "axios";
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -6,14 +7,15 @@ const UserRegister = () => {
     lastName: "",
     address: "",
     dob: "",
-    olSubjectsPassCount: "7",
-    mobileNumber: "",
+    olPassCount: "7",
+    mobile: "",
     email: "",
     certification: "Certification in welding",
-    nvqLevel: "NVQ level 1",
     password: "",
     profileImage: null,
   });
+
+  const fileInputRef = useRef(null); // Create a ref for the file input
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,9 +26,40 @@ const UserRegister = () => {
     setFormData({ ...formData, profileImage: e.target.files[0] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    try {
+      const formDataToSend = new FormData();
+
+      for (const key in formData) {
+        if (key !== "profileImage") {
+          formDataToSend.append(key, formData[key]);
+        }
+      }
+
+      if (formData.profileImage) {
+        formDataToSend.append("userImage", formData.profileImage);
+      }
+
+      const response = await axios.post(
+        "http://localhost:8080/user/addUser",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("User registered successfully:", response.data);
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
+  };
+
+  const triggerFileInput = () => {
+    // Programmatically trigger the file input click
+    fileInputRef.current.click();
   };
 
   return (
@@ -39,19 +72,24 @@ const UserRegister = () => {
             <img
               src={
                 formData.profileImage
-                  ? URL.createObjectURL(formData.profileImage)
+                  ? URL.createObjectURL(formData.profileImage) // Display selected image
                   : "https://via.placeholder.com/150"
               }
               alt="Profile"
               className="w-24 h-24 rounded-full border"
             />
             <input
+              ref={fileInputRef} // Attach the ref to the file input
               type="file"
-              onChange={handleImageUpload}
+              onChange={handleImageUpload} // Trigger image selection
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
           </div>
-          <button className="mt-4 px-4 py-1 bg-green-500 text-white rounded">
+          <button
+            type="button" // Ensure it's a button type
+            onClick={triggerFileInput} // Trigger the file input click when button is pressed
+            className="mt-4 px-4 py-1 bg-green-500 text-white rounded"
+          >
             Upload Image
           </button>
         </div>
@@ -113,8 +151,8 @@ const UserRegister = () => {
               O/L Subjects Pass Count
             </label>
             <select
-              name="olSubjectsPassCount"
-              value={formData.olSubjectsPassCount}
+              name="olPassCount" // Use updated name for backend field
+              value={formData.olPassCount}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border mb-4 rounded"
             >
@@ -129,8 +167,8 @@ const UserRegister = () => {
             <label className="block mb-3 text-gray-700">Mobile Number</label>
             <input
               type="tel"
-              name="mobileNumber"
-              value={formData.mobileNumber}
+              name="mobile" // Use updated name for backend field
+              value={formData.mobile}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border mb-4 rounded"
               placeholder="Mobile Number"
@@ -168,20 +206,6 @@ const UserRegister = () => {
               <option value="Certification in electrical work">
                 Certification in electrical work
               </option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-3 text-gray-700">NVQ Level</label>
-            <select
-              name="nvqLevel"
-              value={formData.nvqLevel}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 mb-4 border rounded"
-            >
-              <option value="NVQ level 1">NVQ level 1</option>
-              <option value="NVQ level 2">NVQ level 2</option>
-              <option value="NVQ level 3">NVQ level 3</option>
             </select>
           </div>
 
