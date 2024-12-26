@@ -49,6 +49,9 @@ const UserViewJob = () => {
         {/* Job Details */}
         <div className="p-6">
           <h1 className="text-3xl font-bold">{job.jobTitle}</h1>
+          <h1 className="text-xl font-semibold text-teal-700">
+            {job.companyId}
+          </h1>
           <p className="text-gray-600 mb-4">{job.jobDescription}</p>
           <h2 className="text-xl font-semibold">About Job</h2>
           <p className="text-gray-700 mt-2 mb-4">{job.jobDescription}</p>
