@@ -1,55 +1,73 @@
-import React from "react";
-import hotelImage from "../../images/landing/hotel1.jpg";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import UserNavbar from "../../components/user/UserNavbar";
-import { useNavigate } from "react-router-dom";
 
 const UserViewJob = () => {
+  const { jobId } = useParams(); // Getting jobId from URL
   const navigate = useNavigate();
+  const [job, setJob] = useState(null); // State to hold job details
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch job details from the backend when the component mounts
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/job/getJob/${jobId}`)
+      .then((response) => {
+        setJob(response.data); // Set job data in state
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Error fetching job data");
+        setLoading(false);
+      });
+  }, [jobId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  // Render job details if available
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
       <UserNavbar />
-      <div className="bg-white my-3 w-full max-w-3xl rounded-lg shadow-md mt-32 mb-16 overflow-hidden">
+      <div className="bg-white my-3 w-full max-w-2xl rounded-lg shadow-md mt-32 mb-16 overflow-hidden">
         {/* Job Image */}
         <div className="w-full h-64">
           <img
-            src={hotelImage}
-            alt="Welder Job"
+            src={`http://localhost:8080/job/${job.jobId}/image`} // Displaying the job image
+            alt={job.jobTitle}
             className="w-full h-full object-cover"
           />
         </div>
 
         {/* Job Details */}
         <div className="p-6">
-          <h1 className="text-3xl font-bold ">Welder needed</h1>
-          <p className="text-gray-600 mb-4">18.06.2024</p>
+          <h1 className="text-3xl font-bold">{job.jobTitle}</h1>
+          <p className="text-gray-600 mb-4">{job.jobDescription}</p>
           <h2 className="text-xl font-semibold">About Job</h2>
-          <p className="text-gray-700 mt-2 mb-4">
-            We’re seeking a skilled Welder to join our team! If you have
-            experience in welding and metal fabrication, this is the perfect
-            opportunity to showcase your craftsmanship. Work with a dynamic team
-            on exciting projects and help build the future with your expertise.
-          </p>
+          <p className="text-gray-700 mt-2 mb-4">{job.jobDescription}</p>
 
           {/* Job Info */}
           <div className="space-y-4">
             <div>
               <h3 className="text-lg font-semibold">Location</h3>
-              <p className="text-gray-700">Xtr Enterprises, Colombo 05</p>
+              <p className="text-gray-700">{job.location}</p>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold">Qualifications</h3>
-              <p className="text-gray-700">Welding certification - NVQ 4</p>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold">Age</h3>
-              <p className="text-gray-700">20-25</p>
+              <p className="text-gray-700">{job.qualification}</p>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold">Working Hours</h3>
-              <p className="text-gray-700">8.00 am - 5.00 pm</p>
+              <p className="text-gray-700">{job.workingHours} hours</p>
             </div>
           </div>
 
@@ -61,7 +79,10 @@ const UserViewJob = () => {
             >
               Apply Job
             </button>
-            <button className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">
+            <button
+              onClick={() => navigate("/userJobs")}
+              className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600"
+            >
               Back
             </button>
           </div>
