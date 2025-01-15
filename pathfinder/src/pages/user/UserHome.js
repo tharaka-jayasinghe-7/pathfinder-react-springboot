@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import hotelImage from "../../images/landing/hotel1.jpg";
 import hotelLogo from "../../images/landing/galadari_logo.jpg";
 import vLogo from "../../images/landing/volkswagen_logo.jpg";
 import vImage from "../../images/landing/v_img.jpg";
-import profPic from "../../images/landing/profile_pic.jpg";
 import UserNavbar from "../../components/user/UserNavbar";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UserHome = () => {
   const navigate = useNavigate();
+  const userId = localStorage.getItem("user_id");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/user/getUser/${userId}`)
+      .then((response) => {
+        setUser(response.data); // Set job data in state
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Error fetching job data");
+        setLoading(false);
+      });
+  }, [userId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   const companies = [
     {
       id: 1,
@@ -38,13 +64,20 @@ const UserHome = () => {
       <div className="fixed h-full bg-white shadow-lg p-6 flex flex-col items-center w-64	">
         {/* User Profile */}
         <img
-          src={profPic}
-          alt="User Profile"
-          className="w-28 h-28 rounded-full mb-4"
+          src={`http://localhost:8080/user/${user.userId}/image`} // Displaying the job image
+          alt={user.jobTitle}
+          className="w-24 h-24 rounded-full border"
         />
-        <h2 className="text-lg font-semibold">Tharaka Jayasinghe</h2>
-        <p className="text-gray-600 mb-6">Certification in welding</p>
-        <button className="bg-teal-600 text-white py-2 px-6 rounded-lg mb-2">
+        <h2 className="text-lg font-semibold">
+          {user.firstName} {user.lastName}
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Certification in {user.certification}
+        </p>
+        <button
+          className="bg-teal-600 text-white py-2 px-6 rounded-lg mb-2"
+          onClick={() => navigate(`/userProfile/${user.userId}`)}
+        >
           View Profile
         </button>
         <button

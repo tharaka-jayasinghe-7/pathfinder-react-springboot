@@ -7,6 +7,7 @@ const UserViewJob = () => {
   const { jobId } = useParams(); // Getting jobId from URL
   const navigate = useNavigate();
   const [job, setJob] = useState(null); // State to hold job details
+  const [company, setCompany] = useState(null); // State to hold company details
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,13 +17,29 @@ const UserViewJob = () => {
       .get(`http://localhost:8080/job/getJob/${jobId}`)
       .then((response) => {
         setJob(response.data); // Set job data in state
-        setLoading(false);
+        console.log("Job Date:", response.data.jobDate); // Log raw job date to console
       })
       .catch((error) => {
         setError("Error fetching job data");
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, [jobId]);
+
+  // Fetch company details only after the job data is available
+  useEffect(() => {
+    if (job?.companyId) {
+      axios
+        .get(`http://localhost:8080/company/getcompany/${job.companyId}`)
+        .then((response) => {
+          setCompany(response.data); // Set company data in state
+        })
+        .catch((error) => {
+          setError("Error fetching company data");
+        });
+    }
+  }, [job]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -31,6 +48,8 @@ const UserViewJob = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
+  const formattedDate = new Date(job.jobDate).toLocaleDateString();
 
   // Render job details if available
   return (
@@ -50,12 +69,12 @@ const UserViewJob = () => {
         <div className="p-6">
           <h1 className="text-3xl font-bold">{job.jobTitle}</h1>
           <h1 className="text-xl font-semibold text-teal-700">
-            {job.companyId}
+            {company?.companyName || "Loading company name..."}
           </h1>
-          <p className="text-gray-600 mb-4">{job.jobDescription}</p>
+          <p className="text-gray-600 mb-4">{formattedDate}</p>{" "}
+          {/* Display formatted date */}
           <h2 className="text-xl font-semibold">About Job</h2>
           <p className="text-gray-700 mt-2 mb-4">{job.jobDescription}</p>
-
           {/* Job Info */}
           <div className="space-y-4">
             <div>
@@ -73,11 +92,10 @@ const UserViewJob = () => {
               <p className="text-gray-700">{job.workingHours} hours</p>
             </div>
           </div>
-
           {/* Buttons */}
           <div className="mt-6 flex justify-center space-x-2">
             <button
-              onClick={() => navigate("/userApplyJob")}
+              onClick={() => navigate(`/userApplyJob/${job.jobId}`)}
               className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
             >
               Apply Job

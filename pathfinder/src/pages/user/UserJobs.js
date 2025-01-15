@@ -25,6 +25,13 @@ const UserJobs = () => {
 
   // Job Card Component
   const JobCard = ({ job }) => {
+    const dateString = job.jobDate;
+
+    // Use toLocaleDateString to format the date based on the local timezone
+    const formattedDate = new Date(dateString).toLocaleDateString("en-GB"); // 'en-GB' is for 'dd/mm/yyyy' format, you can adjust it as needed
+
+    console.log(formattedDate); // Output will now respect the local time zone
+
     return (
       <div className="bg-white rounded-lg shadow-md p-6 m-4">
         {/* Display the Job Image */}
@@ -34,8 +41,8 @@ const UserJobs = () => {
           className="w-full h-48 object-cover rounded-t-lg mb-4"
         />
         <h3 className="text-xl font-semibold text-teal-700">{job.jobTitle}</h3>
-        <p className="text-sm text-gray-500">{job.qualification}</p>
-        <p className="mt- font-bold text-green-500 ">{job.company}</p>
+        <p className="text-sm text-gray-700">{job.qualification}</p>
+        <p className="text-sm text-gray-500 ">{formattedDate}</p>
         <p className="mt-2 text-gray-700">{job.jobDescription}</p>
         <button
           onClick={() => navigate(`/userViewJob/${job.jobId}`)} // Pass jobId to view details

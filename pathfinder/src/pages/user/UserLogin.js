@@ -23,6 +23,10 @@ const UserLogin = () => {
       // If login is successful, navigate to the user home page
       if (response.status === 200) {
         // You can store the user data (like userId) in localStorage or a state management solution
+        const userData = response.data;
+
+        localStorage.setItem("user_id", userData.userId);
+        localStorage.setItem("user_email", userData.email);
         console.log("User Logged In", response.data);
         navigate("/userHome");
       }
