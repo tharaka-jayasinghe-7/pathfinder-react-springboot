@@ -2,11 +2,8 @@ import React from "react";
 import UserNavbar from "../../components/user/UserNavbar";
 import hotelImage from "../../images/landing/hotel1.jpg";
 import vImage from "../../images/landing/v_img.jpg";
-import { useNavigate } from "react-router-dom";
 
 const UserJobs = () => {
-  const navigate = useNavigate();
-
   // Job Data Variable with Images
   const jobs = [
     {
@@ -61,10 +58,7 @@ const UserJobs = () => {
         <p className="text-sm text-gray-500">{job.date}</p>
         <p className="mt- font-bold text-green-500 ">{job.company}</p>
         <p className="mt-2 text-gray-700">{job.description}</p>
-        <button
-          onClick={() => navigate("/userViewJob")}
-          className="mt-6 bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600"
-        >
+        <button className="mt-6 bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
           View Job
         </button>
       </div>

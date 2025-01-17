@@ -4,20 +4,26 @@ import "./index.css";
 import App from "./App";
 import UserLogin from "./pages/user/UserLogin";
 import CompanyLogin from "./pages/company/CompanyLogin";
-import CompanyRegister from "./pages/company/CompanyRegister"; // Import CompanyRegister
+import CompanyRegister from "./pages/company/CompanyRegister";
+import ViewProfile from "./pages/company/ViewProfile";
+import AboutUs from "./pages/company/Aboutus";
+import CompanyJob from "./pages/company/CompanyJob";
+import CompanyHome from "./pages/company/CompanyHome";
+import CompanyNot from "./pages/company/CompanyNot"; // Import the CompanyNot component
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
 import UserJobs from "./pages/user/UserJobs";
-import UserViewJob from "./pages/user/UserViewJob";
-import CompanyHome from "./pages/company/CompanyHome";
-import UserRegister from "./pages/user/UserRegister";
-import UserGuideMe from "./pages/user/UserGuideMe";
-import UserFindCourse from "./pages/user/UserFindCourse";
-import UserViewCourses from "./pages/user/UserViewCourses";
-import UserMyJobs from "./pages/user/UserMyJobs";
-import UserNotifications from "./pages/user/UserNotifications";
-import UserApplyJob from "./pages/user/UserApplyJob";
+import CompanyAddJob from "./pages/company/CompanyAddJob";
+import CompanyUpdateJob from "./pages/company/CompanyUpdateJob";
+import CompanyPackage from "./pages/company/CompanyPackage";
+import CompanyPayment from "./pages/company/CompanyPayment";
+import AdminLogin from "./pages/admin/AdminLogin";
+import GetCompanies from "./pages/admin/GetCompanies";
+import GetUser from "./pages/admin/GetUser";
+import GetSubscription from "./pages/admin/GetSubscription";
+import GetPayment from "./pages/admin/GetPayment";
+import SubscriptionCompnents from "./pages/admin/SubscriptionCompnents";
 
 const router = createBrowserRouter([
   {
@@ -29,10 +35,6 @@ const router = createBrowserRouter([
     element: <UserLogin />,
   },
   {
-    path: "userRegister",
-    element: <UserRegister />,
-  },
-  {
     path: "companyLogin",
     element: <CompanyLogin />,
   },
@@ -41,44 +43,69 @@ const router = createBrowserRouter([
     element: <UserHome />,
   },
   {
-    path: "userGuideMe",
-    element: <UserGuideMe />,
-  },
-  {
-    path: "userFindCourse",
-    element: <UserFindCourse />,
-  },
-  {
-    path: "userViewCourses",
-    element: <UserViewCourses />,
-  },
-  {
     path: "userJobs",
     element: <UserJobs />,
-  },
-  {
-    path: "userViewJob",
-    element: <UserViewJob />,
-  },
-  {
-    path: "userMyJobs",
-    element: <UserMyJobs />,
-  },
-  {
-    path: "userNotifications",
-    element: <UserNotifications />,
-  },
-  {
-    path: "userApplyJob",
-    element: <UserApplyJob />,
   },
   {
     path: "companyHome",
     element: <CompanyHome />,
   },
   {
-    path: "companyRegister", // Add this route for company registration
+    path: "companyRegister",
     element: <CompanyRegister />,
+  },
+  {
+    path: "/viewProfile/:companyId",
+    element: <ViewProfile />,
+  },
+
+  {
+    path: "about-us",
+    element: <AboutUs />,
+  },
+  {
+    path: "companyJob",
+    element: <CompanyJob />,
+  },
+  {
+    path: "companyNot", // Route for Company Notifications
+    element: <CompanyNot />, // Reference the CompanyNot component
+  },
+  {
+    path: "companyAddJob", // New route for adding a job
+    element: <CompanyAddJob />, // Reference the CompanyAddJob component
+  },
+  {
+    path: "companyUpdateJob/:jobId", // Updated route with dynamic jobId
+    element: <CompanyUpdateJob />, // Reference the CompanyUpdateJob component
+  },
+  {
+    path: "companyPackage", // Route for Company Packages
+    element: <CompanyPackage />, // Reference the CompanyPackage component
+  },
+  {
+    path: "/adminLogin",
+    element: <AdminLogin />,
+  },
+  {
+    path: "/getCompanies",
+    element: <GetCompanies />,
+  },
+  {
+    path: "/getUsers",
+    element: <GetUser />,
+  },
+  {
+    path: "/getSubscription",
+    element: <GetSubscription />,
+  },
+  {
+    path: "/getPayment",
+    element: <GetPayment />,
+  },
+  {
+    path: "/addNewSubscription",
+    element: <SubscriptionCompnents />,
   },
 ]);
 

@@ -53,7 +53,7 @@ const LandingPage = () => {
               <li>
                 {/* Navigate to company register */}
                 <button
-                  onClick={() => navigate("/userRegister")} // Adjust route for company registration
+                  onClick={() => navigate("/companyRegister")} // Adjust route for company registration
                   className="text-orange-500 hover:text-orange-400"
                 >
                   Register Now

@@ -5,10 +5,8 @@ import vLogo from "../../images/landing/volkswagen_logo.jpg";
 import vImage from "../../images/landing/v_img.jpg";
 import profPic from "../../images/landing/profile_pic.jpg";
 import UserNavbar from "../../components/user/UserNavbar";
-import { useNavigate } from "react-router-dom";
 
 const UserHome = () => {
-  const navigate = useNavigate();
   const companies = [
     {
       id: 1,
@@ -47,10 +45,7 @@ const UserHome = () => {
         <button className="bg-teal-600 text-white py-2 px-6 rounded-lg mb-2">
           View Profile
         </button>
-        <button
-          onClick={() => navigate("/")}
-          className="bg-red-600 text-white py-2 px-6 rounded-lg"
-        >
+        <button className="bg-red-500 text-white py-2 px-6 rounded-lg">
           Log Out
         </button>
       </div>
