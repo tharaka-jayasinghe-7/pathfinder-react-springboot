@@ -1,26 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import UserNavbar from "../../components/user/UserNavbar";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UserApplyJob = () => {
-  // Job details loaded from a variable
-  const jobDetails = {
-    company: "XTR Enterprises",
-    title: "Welder needed",
-    date: "18.06.2024",
-  };
+  const { jobId } = useParams();
+  const userId = localStorage.getItem("user_id");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [job, setJob] = useState(null); // State to hold job details
+  const [company, setCompany] = useState(null);
 
   // State to hold form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    mobileNumber: "",
+    mobile: "",
     email: "",
-    certification: "Certification in welding",
-    nvqLevel: "NVQ level 1",
+    certification: "",
+    olPassCount: "",
     resume: null,
   });
 
-  // Handle change for form inputs
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/user/getUser/${userId}`)
+      .then((response) => {
+        setUser(response.data); // Set user data in state
+
+        // Pre-fill the form with user details
+        setFormData((prevData) => ({
+          ...prevData,
+          firstName: response.data.firstName || "",
+          lastName: response.data.lastName || "",
+          mobile: response.data.mobile || "",
+          email: response.data.email || "",
+          certification: response.data.certification || "",
+          olPassCount: response.data.olPassCount || "",
+        }));
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Error fetching user data");
+        setLoading(false);
+      });
+  }, [userId]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/job/getJob/${jobId}`)
+      .then((response) => {
+        setJob(response.data); // Set job data in state
+      })
+      .catch((error) => {
+        setError("Error fetching job data");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [jobId]);
+
+  // Fetch company details only after the job data is available
+  useEffect(() => {
+    if (job?.companyId) {
+      axios
+        .get(`http://localhost:8080/company/getcompany/${job.companyId}`)
+        .then((response) => {
+          setCompany(response.data); // Set company data in state
+        })
+        .catch((error) => {
+          setError("Error fetching company data");
+        });
+    }
+  }, [job]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -29,7 +83,6 @@ const UserApplyJob = () => {
     }));
   };
 
-  // Handle resume upload
   const handleResumeUpload = (e) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -37,11 +90,50 @@ const UserApplyJob = () => {
     }));
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Here you can handle the form data submission to a backend
+
+    if (!formData.resume) {
+      alert("Please upload your resume");
+      return;
+    }
+
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append("cvImage", formData.resume);
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/apply/user/${userId}/job/${jobId}/addApply`,
+        formDataToSubmit,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 201) {
+        alert("Application submitted successfully!");
+        // Optionally redirect or reset the form here
+      }
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      alert("Failed to submit the application. Please try again.");
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  // Job details loaded from a variable
+  const jobDetails = {
+    company: company ? company.companyName : "Loading company...", // Handle null case
+    title: job ? job.jobTitle : "Loading job title...", // Handle null case
+    date: job ? job.jobDate : "Loading job date...",
   };
 
   return (
@@ -85,7 +177,7 @@ const UserApplyJob = () => {
               <input
                 type="tel"
                 name="mobileNumber"
-                value={formData.mobileNumber}
+                value={formData.mobile}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500"
                 required
@@ -106,33 +198,27 @@ const UserApplyJob = () => {
 
             <div>
               <label className="block text-gray-700">Certification</label>
-              <select
+              <input
+                type="text"
                 name="certification"
                 value={formData.certification}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500"
                 required
-              >
-                <option>Certification in welding</option>
-                <option>Other certification</option>
-              </select>
+              />
             </div>
 
             <div>
-              <label className="block text-gray-700">NVQ Level</label>
-              <select
-                name="nvqLevel"
-                value={formData.nvqLevel}
+              <label className="block text-gray-700">O/Level pass count</label>
+              <input
+                type="text"
+                name="olPassCount"
+                value={formData.olPassCount}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500"
                 required
-              >
-                <option>NVQ level 1</option>
-                <option>NVQ level 2</option>
-                <option>NVQ level 3</option>
-              </select>
+              />
             </div>
-
             <div>
               <label className="block text-gray-700">Resume</label>
               <input

@@ -1,68 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import UserNavbar from "../../components/user/UserNavbar";
-import hotelImage from "../../images/landing/hotel1.jpg";
-import vImage from "../../images/landing/v_img.jpg";
 import { useNavigate } from "react-router-dom";
 
 const UserJobs = () => {
   const navigate = useNavigate();
+  const [jobs, setJobs] = useState([]); // State to hold jobs data
+  const [loading, setLoading] = useState(true); // To handle loading state
+  const [error, setError] = useState(null); // To handle any errors
 
-  // Job Data Variable with Images
-  const jobs = [
-    {
-      id: 1,
-      title: "Welder needed",
-      company: "XYZ Enterprises",
-      date: "12/10/2024",
-      description:
-        "We're seeking a skilled welder to join our team. If you have the perfect expertise in welding, apply now!",
-      image: hotelImage,
-    },
-    {
-      id: 2,
-      title: "Trainee mechanic needed",
-      company: "Z Motors",
-      date: "13/10/2024",
-      description:
-        "We're looking for a skilled and reliable Trainee Mechanic to join our dynamic team. If you have a passion for cars, we want to hear from you!",
-      image: vImage,
-    },
-    {
-      id: 3,
-      title: "Junior chef needed",
-      company: "ABC Hotel",
-      date: "11/10/2024",
-      description:
-        "We are looking for a talented and passionate Junior Chef to join our team. Showcase your creativity in our state-of-the-art kitchen.",
-      image: vImage,
-    },
-    {
-      id: 4,
-      title: "We are looking for Power Electrician",
-      company: "Flash Electrics",
-      date: "14/10/2024",
-      description:
-        "Looking for a qualified Power Electrician for high precision tasks in a dynamic environment. Apply now if you have the right skill set!",
-      image: hotelImage,
-    },
-  ];
+  // Fetch jobs data from the backend
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/job/getJobs")
+      .then((response) => {
+        setJobs(response.data); // Set the jobs data in state
+        setLoading(false); // Set loading to false once data is fetched
+      })
+      .catch((error) => {
+        setError("Error fetching jobs data");
+        setLoading(false);
+      });
+  }, []);
 
   // Job Card Component
   const JobCard = ({ job }) => {
+    const dateString = job.jobDate;
+
+    // Use toLocaleDateString to format the date based on the local timezone
+    const formattedDate = new Date(dateString).toLocaleDateString("en-GB"); // 'en-GB' is for 'dd/mm/yyyy' format, you can adjust it as needed
+
+    console.log(formattedDate); // Output will now respect the local time zone
+
     return (
       <div className="bg-white rounded-lg shadow-md p-6 m-4">
         {/* Display the Job Image */}
         <img
-          src={job.image}
-          alt={job.title}
+          src={`http://localhost:8080/job/${job.jobId}/image`} // Image URL from backend
+          alt={job.jobTitle}
           className="w-full h-48 object-cover rounded-t-lg mb-4"
         />
-        <h3 className="text-xl font-semibold text-teal-700">{job.title}</h3>
-        <p className="text-sm text-gray-500">{job.date}</p>
-        <p className="mt- font-bold text-green-500 ">{job.company}</p>
-        <p className="mt-2 text-gray-700">{job.description}</p>
+        <h3 className="text-xl font-semibold text-teal-700">{job.jobTitle}</h3>
+        <p className="text-sm text-gray-700">{job.qualification}</p>
+        <p className="text-sm text-gray-500 ">{formattedDate}</p>
+        <p className="mt-2 text-gray-700">{job.jobDescription}</p>
         <button
-          onClick={() => navigate("/userViewJob")}
+          onClick={() => navigate(`/userViewJob/${job.jobId}`)} // Pass jobId to view details
           className="mt-6 bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600"
         >
           View Job
@@ -102,12 +85,18 @@ const UserJobs = () => {
           </div>
         </div>
 
-        {/* Job Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {jobs.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </div>
+        {/* Loading or Error Handling */}
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {jobs.map((job) => (
+              <JobCard key={job.jobId} job={job} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

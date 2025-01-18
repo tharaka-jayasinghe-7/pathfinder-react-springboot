@@ -18,6 +18,7 @@ import UserViewCourses from "./pages/user/UserViewCourses";
 import UserMyJobs from "./pages/user/UserMyJobs";
 import UserNotifications from "./pages/user/UserNotifications";
 import UserApplyJob from "./pages/user/UserApplyJob";
+import UserProfile from "./pages/user/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "userRegister",
     element: <UserRegister />,
+  },
+  {
+    path: "userProfile/:userId",
+    element: <UserProfile />,
   },
   {
     path: "companyLogin",
@@ -57,7 +62,7 @@ const router = createBrowserRouter([
     element: <UserJobs />,
   },
   {
-    path: "userViewJob",
+    path: "userViewJob/:jobId",
     element: <UserViewJob />,
   },
   {
@@ -69,7 +74,7 @@ const router = createBrowserRouter([
     element: <UserNotifications />,
   },
   {
-    path: "userApplyJob",
+    path: "userApplyJob/:jobId",
     element: <UserApplyJob />,
   },
   {

@@ -6,6 +6,7 @@ import userProfileImage from "../../images/landing/profile_pic.jpg"; // Import u
 const UserNavbar = () => {
   // Get the current route path using useLocation
   const location = useLocation();
+  const userId = localStorage.getItem("user_id");
 
   // Map routes to the active item names
   const getActiveItem = () => {
@@ -73,9 +74,9 @@ const UserNavbar = () => {
 
         {/* Profile Image on the right */}
         <div className="flex items-center">
-          <Link to="/userProfile">
+          <Link to="/userProfile/${user.userId}">
             <img
-              src={userProfileImage}
+              src={`http://localhost:8080/user/${userId}/image`}
               alt="User Profile"
               className="w-10 h-10 rounded-full border-1 border-white ml-4 mr-4" // Circle with border
             />

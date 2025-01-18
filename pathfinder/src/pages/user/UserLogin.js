@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/landing/Navbar";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UserLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // Handle form submission
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/user/userLogin",
+        null,
+        {
+          params: { email, password },
+        }
+      );
+
+      // If login is successful, navigate to the user home page
+      if (response.status === 200) {
+        // You can store the user data (like userId) in localStorage or a state management solution
+        const userData = response.data;
+
+        localStorage.setItem("user_id", userData.userId);
+        localStorage.setItem("user_email", userData.email);
+        console.log("User Logged In", response.data);
+        navigate("/userHome");
+      }
+    } catch (error) {
+      // Handle errors (e.g., invalid email/password)
+      setError("Invalid email or password");
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -26,6 +58,8 @@ const UserLogin = () => {
               id="email"
               className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -39,18 +73,26 @@ const UserLogin = () => {
               id="password"
               className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
+          {/* Error Message */}
+          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
           {/* Buttons */}
           <div className="flex flex-col space-y-3">
             <button
-              onClick={() => navigate("/userHome")}
+              onClick={handleLogin}
               className="bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
             >
               Login
             </button>
-            <button className="bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition"
+            >
               Back
             </button>
           </div>
