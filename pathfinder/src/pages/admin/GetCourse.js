@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getAllCourse } from "../../services/CourseService";
+import { deleteCourse, getAllCourse } from "../../services/CourseService";
 import NavbarUpdate from "../../components/landing/NavbarUpdate";
 import AdminNavbar from "../../components/admin/AdminNavbar";
+import { useNavigate } from "react-router-dom";
 
 const GetCourse = () => {
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     listCourses();
@@ -21,6 +23,20 @@ const GetCourse = () => {
       });
   }
 
+  function removeCourse(courseId) {
+    deleteCourse(courseId)
+      .then((response) => {
+        listCourses();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function addCourse() {
+    navigate("/addNewCourse");
+  }
+
   return (
     <div className="flex">
       <NavbarUpdate />
@@ -30,12 +46,12 @@ const GetCourse = () => {
       {/* Main Content */}
       <div className="p-8 bg-gray-100 min-h-screen ml-64 w-full">
         <h2 className="text-2xl font-bold text-gray-700 mb-6">Users List</h2>
-        {/* <button
+        <button
           onClick={addCourse}
           className="bg-teal-600 text-white px-6 py-2 rounded shadow-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
         >
           Add Course
-        </button> */}
+        </button>
         <div className="bg-white shadow-md rounded-lg overflow-hidden w-full">
           <div className="p-4 flex justify-between items-center"></div>
           <div className="overflow-x-auto">
@@ -53,6 +69,7 @@ const GetCourse = () => {
                   <th className="py-2 px-4">Duration</th>
                   <th className="py-2 px-4">NVQ Level</th>
                   <th className="py-2 px-4">Type</th>
+                  <th className="py-2 px-4">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -77,7 +94,7 @@ const GetCourse = () => {
 
                     <button
                       onClick={() => removeCourse(course.courseId)}
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+                      className="bg-red-500 text-white px-2 py-1 text-sm rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
                     >
                       Delete
                     </button>

@@ -19,7 +19,7 @@ const Navbar = () => {
           <li>
             <button
               onClick={() => navigate("/adminLogin")}
-              className="bg-white text-teal-700 px-4 py-2 rounded hover:bg-gray-200 transition"
+              className="bg-teal-700 text-white px-4 py-2 rounded hover:bg-teal-600 transition"
             >
               Admin Login
             </button>

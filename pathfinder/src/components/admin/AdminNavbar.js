@@ -30,7 +30,7 @@ const AdminNavbar = () => {
                   : item === "Users"
                   ? "/getUsers"
                   : item === "Jobs"
-                  ? "/adminJobs"
+                  ? "/getJobs"
                   : item === "Companies"
                   ? "/getCompanies"
                   : item === "Courses"

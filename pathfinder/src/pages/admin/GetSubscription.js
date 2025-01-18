@@ -83,7 +83,7 @@ const GetSubscription = () => {
                       onClick={() =>
                         removeSubscription(subscription.subscriptionId)
                       }
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+                      className="bg-red-500 text-white px-2 py-1 text-sm rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
                     >
                       Delete
                     </button>

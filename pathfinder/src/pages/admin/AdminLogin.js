@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/landing/Navbar";
 import NavbarUpdate from "../../components/landing/NavbarUpdate";
+import NavbarLogin from "../../components/landing/NavbarLogin";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ const AdminLogin = () => {
 
       if (response.status == 200) {
         console.log("User Logged In", response.data);
-        navigate("/getCompanies");
+        navigate("/adminDashboard");
       }
     } catch (error) {
       setError("Invaild email or password");
@@ -34,7 +35,7 @@ const AdminLogin = () => {
 
   return (
     <div>
-      <NavbarUpdate />
+      <NavbarLogin />
       <div className="min-h-screen bg-gray-200 flex flex-col justify-center items-center">
         <div className="bg-white shadow-md rounded-lg w-[400px] py-8 px-6 mt-1">
           <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">

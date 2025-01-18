@@ -25,6 +25,9 @@ import GetSubscription from "./pages/admin/GetSubscription";
 import GetPayment from "./pages/admin/GetPayment";
 import SubscriptionCompnents from "./pages/admin/SubscriptionCompnents";
 import GetCourse from "./pages/admin/GetCourse";
+import CourseCompnents from "./pages/admin/CourseCompnents";
+import GetJobs from "./pages/admin/GetJobs";
+import AdminDashBoard from "./pages/admin/AdminDashBoard";
 
 const router = createBrowserRouter([
   {
@@ -115,6 +118,18 @@ const router = createBrowserRouter([
   {
     path: "/getCourse",
     element: <GetCourse />,
+  },
+  {
+    path: "/addNewCourse",
+    element: <CourseCompnents />,
+  },
+  {
+    path: "/getJobs",
+    element: <GetJobs />,
+  },
+  {
+    path: "/adminDashboard",
+    element: <AdminDashBoard />,
   },
 ]);
 
