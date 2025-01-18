@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserNavbar from "../../components/user/UserNavbar"; // Importing the UserNavbar
+import UserNavbar from "../../components/User/UserNavbar"; // Importing the UserNavbar
 import axios from "axios";
 
 const UserMyJobs = () => {

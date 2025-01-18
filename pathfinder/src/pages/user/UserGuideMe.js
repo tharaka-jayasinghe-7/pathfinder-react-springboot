@@ -1,5 +1,5 @@
 import React from "react";
-import UserNavbar from "../../components/user/UserNavbar";
+import UserNavbar from "../../components/User/UserNavbar";
 import vImage from "../../images/landing/v_img.jpg";
 import { useNavigate } from "react-router-dom";
 

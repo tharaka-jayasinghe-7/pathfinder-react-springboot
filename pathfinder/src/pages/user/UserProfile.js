@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserNavbar from "../../components/user/UserNavbar";
+import UserNavbar from "../../components/User/UserNavbar";
 
 const UserProfile = () => {
   const userId = localStorage.getItem("user_id");

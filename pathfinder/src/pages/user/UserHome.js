@@ -3,7 +3,7 @@ import hotelImage from "../../images/landing/hotel1.jpg";
 import hotelLogo from "../../images/landing/galadari_logo.jpg";
 import vLogo from "../../images/landing/volkswagen_logo.jpg";
 import vImage from "../../images/landing/v_img.jpg";
-import UserNavbar from "../../components/user/UserNavbar";
+import UserNavbar from "../../components/User/UserNavbar";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import UserNavbar from "../../components/user/UserNavbar"; // Import the UserNavbar
+import UserNavbar from "../../components/User/UserNavbar"; // Import the UserNavbar
 import hotelImage from "../../images/landing/hotel1.jpg";
 
 const UserViewCourses = () => {

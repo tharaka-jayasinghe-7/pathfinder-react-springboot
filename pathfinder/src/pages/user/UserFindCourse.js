@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserNavbar from "../../components/user/UserNavbar"; // Adjust based on your folder structure
+import UserNavbar from "../../components/User/UserNavbar"; // Adjust based on your folder structure
 import { useNavigate } from "react-router-dom";
 
 const UserFindCourse = () => {
