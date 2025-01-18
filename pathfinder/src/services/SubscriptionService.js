@@ -8,3 +8,6 @@ export const deleteSubscription = (subscriptionId) =>
   axios.delete(
     BASE_SUBCRIPTION_URL + "/deleteSubscription" + "/" + subscriptionId
   );
+
+export const addSubscription = (subscription) =>
+  axios.post(BASE_SUBCRIPTION_URL + "/addSubscription", subscription);
