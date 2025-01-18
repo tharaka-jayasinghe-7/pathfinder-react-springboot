@@ -22,7 +22,7 @@ const CompanyHome = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/company/getCompany/${companyId}`)
+      .get(`http://localhost:8080/company/getcompany/${companyId}`)
       .then((response) => {
         setCompany(response.data);
         setLoading(false);

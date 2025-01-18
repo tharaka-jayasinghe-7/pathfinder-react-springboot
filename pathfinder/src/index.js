@@ -24,6 +24,7 @@ import GetUser from "./pages/admin/GetUser";
 import GetSubscription from "./pages/admin/GetSubscription";
 import GetPayment from "./pages/admin/GetPayment";
 import SubscriptionCompnents from "./pages/admin/SubscriptionCompnents";
+import GetCourse from "./pages/admin/GetCourse";
 
 const router = createBrowserRouter([
   {
@@ -110,6 +111,10 @@ const router = createBrowserRouter([
   {
     path: "/addPayment",
     element: <CompanyPayment />,
+  },
+  {
+    path: "/getCourse",
+    element: <GetCourse />,
   },
 ]);
 

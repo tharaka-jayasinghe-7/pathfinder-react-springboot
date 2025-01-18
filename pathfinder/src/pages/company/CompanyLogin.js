@@ -13,11 +13,9 @@ const CompanyLogin = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/company/companyLogin",
-        { email, password }, // JSON body
+        null,
         {
-          headers: {
-            "Content-Type": "application/json", // Explicitly set content type
-          },
+          params: { email, password },
         }
       );
 

@@ -34,7 +34,7 @@ const AdminNavbar = () => {
                   : item === "Companies"
                   ? "/getCompanies"
                   : item === "Courses"
-                  ? "/adminCourses"
+                  ? "/getCourse"
                   : item === "Subscriptions"
                   ? "/getSubscription"
                   : item === "Payment"

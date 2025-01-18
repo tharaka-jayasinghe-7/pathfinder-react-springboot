@@ -14,7 +14,7 @@ const ViewProfile = () => {
   // Fetch company details from the backend when the component mounts
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/company/getCompany/${companyId}`)
+      .get(`http://localhost:8080/company/getcompany/${companyId}`)
       .then((response) => {
         setCompany(response.data); // Set company data in state
         setLoading(false);
