@@ -107,6 +107,10 @@ const router = createBrowserRouter([
     path: "/addNewSubscription",
     element: <SubscriptionCompnents />,
   },
+  {
+    path: "/addPayment",
+    element: <CompanyPayment />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

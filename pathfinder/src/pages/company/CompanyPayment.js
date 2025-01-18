@@ -1,180 +1,108 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import CompanyNavbar from "../../components/company/CompanyNavbar";
+import { useLocation } from "react-router-dom";
 
 const CompanyPayment = () => {
   const location = useLocation();
-  const selectedPackage = location.state?.package;
-  const navigate = useNavigate();
-
-  // State Management
+  const { amount: passedAmount } = location.state || {};
+  const [amount, setAmount] = useState(passedAmount || "");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [cardNumber, setCardNumber] = useState("");
-  const [expirationMonth, setExpirationMonth] = useState("");
-  const [expirationYear, setExpirationYear] = useState("");
-  const [cvvCode, setCvvCode] = useState("");
-  const [billingAddress, setBillingAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [code, setCode] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  const companyId = localStorage.getItem("company_id");
 
-  const handlePayment = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!selectedPackage?.companyId) {
-      alert("Company ID is missing. Cannot process payment.");
-      return;
-    }
-
-    const payment = {
+    const paymentData = {
+      amount: parseFloat(amount),
       paymentMethod,
       cardNumber,
-      expirationMonth,
-      expirationYear,
-      cvvCode,
-      billingAddress,
-      email,
-      phone,
+      code: parseInt(code),
     };
+
+    axios
+      .post(
+        `http://localhost:8080/payment/company/${companyId}/addPayment`,
+        paymentData
+      )
+      .then((response) => {
+        setSuccessMessage("Payment added successfully!");
+        setErrorMessage("");
+        setAmount("");
+        setPaymentMethod("");
+        setCardNumber("");
+        setCode("");
+      })
+      .catch((error) => {
+        setErrorMessage("Failed to add payment. Please try again.");
+        setSuccessMessage("");
+      });
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div>
       <CompanyNavbar />
-      <div className="flex items-center justify-center py-8">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-2xl font-semibold mb-6">
-            Payment for {selectedPackage?.name}
-          </h2>
-          <p className="text-lg font-semibold text-gray-700 mb-4">
-            {selectedPackage?.price}
-          </p>
-
-          <form onSubmit={handlePayment}>
-            {/* Payment Method Section */}
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold">Payment Method</h2>
-              <select
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="bg-white shadow-md rounded-lg p-6 w-1/2">
+          <h2 className="text-lg font-semibold mb-4">Add Payment</h2>
+          {successMessage && (
+            <p className="text-green-500 mb-4">{successMessage}</p>
+          )}
+          {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">Amount</label>
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full border border-gray-300 rounded-md p-2"
+                disabled // Makes it read-only
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">Payment Method</label>
+              <input
+                type="text"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full p-3 border rounded-lg"
-              >
-                <option value="" disabled>
-                  Choose card type
-                </option>
-                <option value="visa">Visa</option>
-                <option value="mastercard">MasterCard</option>
-                <option value="amex">American Express</option>
-                <option value="discover">Discover</option>
-              </select>
+                className="w-full border border-gray-300 rounded-md p-2"
+                required
+              />
             </div>
-
-            {/* Credit Card Details */}
-            <div className="mb-6">
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">Card Number</label>
               <input
                 type="text"
-                placeholder="Card number"
                 value={cardNumber}
                 onChange={(e) => setCardNumber(e.target.value)}
-                className="w-full p-3 mt-3 border rounded-lg"
+                className="w-full border border-gray-300 rounded-md p-2"
                 required
               />
-              <div className="flex mt-3 space-x-3">
-                <select
-                  value={expirationMonth}
-                  onChange={(e) => setExpirationMonth(e.target.value)}
-                  className="w-1/2 p-3 border rounded-lg"
-                  required
-                >
-                  <option value="" disabled>
-                    Month
-                  </option>
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i + 1} value={i + 1}>
-                      {String(i + 1).padStart(2, "0")}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={expirationYear}
-                  onChange={(e) => setExpirationYear(e.target.value)}
-                  className="w-1/2 p-3 border rounded-lg"
-                  required
-                >
-                  <option value="" disabled>
-                    Year
-                  </option>
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <option
-                      key={i + new Date().getFullYear()}
-                      value={i + new Date().getFullYear()}
-                    >
-                      {i + new Date().getFullYear()}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">Security Code</label>
               <input
-                type="text"
-                placeholder="CVV"
-                value={cvvCode}
-                onChange={(e) => setCvvCode(e.target.value)}
-                className="w-full p-3 mt-3 border rounded-lg"
+                type="number"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="w-full border border-gray-300 rounded-md p-2"
                 required
               />
             </div>
 
-            {/* Billing Address */}
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold">Billing Address</h2>
-              <input
-                type="text"
-                placeholder="Billing Address"
-                value={billingAddress}
-                onChange={(e) => setBillingAddress(e.target.value)}
-                className="w-full p-3 mt-3 border rounded-lg"
-                required
-              />
-            </div>
-
-            {/* Contact Details */}
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold">Contact Details</h2>
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-3 mt-3 border rounded-lg"
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full p-3 mt-3 border rounded-lg"
-                required
-              />
-            </div>
-
-            {/* Buttons */}
-            <div className="flex justify-between">
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-black text-white py-3 px-6 rounded-lg"
+                className="bg-teal-600 text-white px-4 py-2 rounded-md"
               >
-                Pay
-              </button>
-              <button
-                type="button"
-                onClick={handleGoBack}
-                className="bg-gray-300 text-black py-3 px-6 rounded-lg"
-              >
-                Go Back
+                Submit Payment
               </button>
             </div>
           </form>

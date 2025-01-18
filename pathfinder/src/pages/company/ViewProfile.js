@@ -135,6 +135,14 @@ const ViewProfile = () => {
                 rows="4"
               ></textarea>
             </div>
+            <div className="text-center mt-10">
+              <button
+                onClick={() => navigate("/companyHome")}
+                className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 rounded"
+              >
+                Go Back
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -8,38 +8,37 @@ const CompanyHome = () => {
   const navigate = useNavigate();
   const companyId = localStorage.getItem("company_id");
 
-  // Declare all hooks at the top level of the component
   const [company, setCompany] = useState(null);
-  const [posts, setPosts] = useState([]); // Store posts from backend
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [postText, setPostText] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const [postType, setPostType] = useState("");
+  const [postDate, setPostDate] = useState("");
   const [postImage, setPostImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
-  // Fetch company details and posts
   useEffect(() => {
-    // Fetch company details
     axios
       .get(`http://localhost:8080/company/getCompany/${companyId}`)
       .then((response) => {
         setCompany(response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setError("Error fetching company details");
         setLoading(false);
       });
 
-    // Fetch posts by company
     axios
       .get(`http://localhost:8080/post/getPostByCompany/${companyId}`)
       .then((response) => {
         setPosts(response.data);
-        console.log(response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setError("Error fetching posts");
         setLoading(false);
       });
@@ -55,16 +54,42 @@ const CompanyHome = () => {
 
   const handlePostSubmit = (e) => {
     e.preventDefault();
-    console.log("Post submitted:", { postText, postImage });
-    setPostText("");
-    setPostImage(null);
-    setIsModalOpen(false);
+
+    const formData = new FormData();
+    formData.append("title", postTitle);
+    formData.append("content", postContent);
+    formData.append("type", postType);
+    formData.append("date", postDate);
+    formData.append("image", postImage);
+
+    axios
+      .post(
+        `http://localhost:8080/post/company/${companyId}/addPost`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
+      .then((response) => {
+        setPosts((prevPosts) => [response.data, ...prevPosts]);
+        setIsModalOpen(false);
+        setPostTitle("");
+        setPostContent("");
+        setPostType("");
+        setPostDate("");
+        setPostImage(null);
+        setImagePreview(null);
+      })
+      .catch(() => {
+        setError("Error adding post");
+      });
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPostImage(URL.createObjectURL(file));
+      setPostImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -124,7 +149,7 @@ const CompanyHome = () => {
                 >
                   <div className="flex items-start space-x-4">
                     <img
-                      src={companyLogo} // Use the company's logo if `post` doesn't have its own
+                      src={companyLogo}
                       alt="Company Logo"
                       className="w-16 h-16 rounded-full"
                     />
@@ -133,8 +158,7 @@ const CompanyHome = () => {
                         {post.title}
                       </h3>
                       <p className="text-gray-500 text-sm text-left">
-                        {new Date(post.date).toLocaleDateString()}{" "}
-                        {/* Format the date */}
+                        {new Date(post.date).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
@@ -143,20 +167,11 @@ const CompanyHome = () => {
 
                   {post.image && (
                     <img
-                      src={`data:image/jpeg;base64,${post.image}`} // Assuming the image is in base64 format
+                      src={`data:image/jpeg;base64,${post.image}`}
                       alt={`${post.title} Image`}
                       className="w-full h-96 rounded-lg object-cover mb-6"
                     />
                   )}
-
-                  <div className="flex justify-center mt-4">
-                    <button
-                      className="bg-teal-600 text-white py-2 px-6 rounded-lg mb-2"
-                      onClick={() => navigate(`/viewProfile/${companyId}`)}
-                    >
-                      View Profile
-                    </button>
-                  </div>
                 </div>
               ))}
             </div>
@@ -170,21 +185,41 @@ const CompanyHome = () => {
           <div className="bg-white rounded-lg p-6 w-1/2 max-w-3xl">
             <h2 className="text-lg font-semibold mb-4">Create a Post</h2>
             <form onSubmit={handlePostSubmit}>
+              <input
+                type="text"
+                value={postTitle}
+                onChange={(e) => setPostTitle(e.target.value)}
+                placeholder="Post Title"
+                className="w-full border border-gray-300 rounded-md p-2 mb-4"
+              />
               <textarea
-                value={postText}
-                onChange={(e) => setPostText(e.target.value)}
+                value={postContent}
+                onChange={(e) => setPostContent(e.target.value)}
                 placeholder="What's on your mind?"
                 className="w-full border border-gray-300 rounded-md p-2 mb-4"
                 rows="4"
+              />
+              <input
+                type="text"
+                value={postType}
+                onChange={(e) => setPostType(e.target.value)}
+                placeholder="Post Type"
+                className="w-full border border-gray-300 rounded-md p-2 mb-4"
+              />
+              <input
+                type="date"
+                value={postDate}
+                onChange={(e) => setPostDate(e.target.value)}
+                className="w-full border border-gray-300 rounded-md p-2 mb-4"
               />
               <input
                 type="file"
                 onChange={handleImageChange}
                 className="mb-4"
               />
-              {postImage && (
+              {imagePreview && (
                 <img
-                  src={postImage}
+                  src={imagePreview}
                   alt="Post Preview"
                   className="w-full h-40 object-cover rounded-lg mb-4"
                 />
