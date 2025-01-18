@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CompanyNavbar from "../../components/company/CompanyNavbar";
-import companyLogo from "../../images/landing/galadari_logo.jpg";
 import axios from "axios";
 
 const CompanyHome = () => {
@@ -19,6 +18,8 @@ const CompanyHome = () => {
   const [postDate, setPostDate] = useState("");
   const [postImage, setPostImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+
+  const companyImageUrl = `http://localhost:8080/company/${companyId}/image`;
 
   useEffect(() => {
     axios
@@ -100,11 +101,14 @@ const CompanyHome = () => {
       {/* Sidebar */}
       <div className="fixed h-full bg-white shadow-lg p-6 flex flex-col items-center w-64">
         <img
-          src={companyLogo}
+          src={companyImageUrl}
           alt="Company Logo"
           className="w-28 h-28 rounded-full mb-4"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/150"; // Fallback image
+          }}
         />
-        <h2 className="text-lg font-semibold">{company?.comapanyName}</h2>
+        <h2 className="text-lg font-semibold">{company?.companyName}</h2>
         <p className="text-gray-600 mb-6">Excellence in Hospitality</p>
         <button
           className="bg-yellow-500 text-white py-2 px-6 rounded-lg mb-4"
@@ -129,9 +133,12 @@ const CompanyHome = () => {
           <div className="flex-1 ml-56 p-6">
             <div className="bg-white shadow-md rounded-lg p-4 mb-6 flex items-center space-x-4">
               <img
-                src={companyLogo}
+                src={companyImageUrl}
                 alt="Company Logo"
                 className="w-8 h-8 rounded-full"
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/150"; // Fallback image
+                }}
               />
               <button
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none text-left"
@@ -147,20 +154,25 @@ const CompanyHome = () => {
                   key={post.postId}
                   className="bg-white shadow-lg rounded-xl p-6 w-4/5 mx-auto pb-6"
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-center space-x-4 mb-4">
                     <img
-                      src={companyLogo}
+                      src={companyImageUrl}
                       alt="Company Logo"
                       className="w-16 h-16 rounded-full"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/150"; // Fallback image
+                      }}
                     />
-                    <div>
-                      <h3 className="text-lg font-semibold text-left">
-                        {post.title}
-                      </h3>
-                      <p className="text-gray-500 text-sm text-left">
-                        {new Date(post.date).toLocaleDateString()}
-                      </p>
-                    </div>
+                    <h3 className="text-lg font-semibold">
+                      {company?.companyName}
+                    </h3>
+                  </div>
+
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold">{post.title}</h3>
+                    <p className="text-gray-500 text-sm">
+                      {new Date(post.date).toLocaleDateString()}
+                    </p>
                   </div>
 
                   <p className="text-gray-700 mt-5 px-6 mb-6">{post.content}</p>

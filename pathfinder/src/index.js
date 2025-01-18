@@ -28,6 +28,7 @@ import GetCourse from "./pages/admin/GetCourse";
 import CourseCompnents from "./pages/admin/CourseCompnents";
 import GetJobs from "./pages/admin/GetJobs";
 import AdminDashBoard from "./pages/admin/AdminDashBoard";
+import CompanyInterview from "./pages/company/CompanyInterview";
 
 const router = createBrowserRouter([
   {
@@ -64,11 +65,11 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "about-us",
+    path: "/about-us",
     element: <AboutUs />,
   },
   {
-    path: "companyJob",
+    path: "/companyJob",
     element: <CompanyJob />,
   },
   {
@@ -130,6 +131,10 @@ const router = createBrowserRouter([
   {
     path: "/adminDashboard",
     element: <AdminDashBoard />,
+  },
+  {
+    path: "/companyInterview/:jobId",
+    element: <CompanyInterview />,
   },
 ]);
 

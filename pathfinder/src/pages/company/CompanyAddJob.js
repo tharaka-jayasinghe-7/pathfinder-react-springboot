@@ -1,116 +1,132 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
-import CompanyNavbar from "../../components/company/CompanyNavbar"; // Import the navbar
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CompanyNavbar from "../../components/company/CompanyNavbar";
+import axios from "axios";
 
 const CompanyAddJob = () => {
   const navigate = useNavigate();
+  const [jobData, setJobData] = useState({
+    jobTitle: "",
+    jobDescription: "",
+    location: "",
+    reqOlPassCount: "",
+    workingHours: "",
+    Qualification: "",
+    jobImage: null, // For storing the uploaded image
+  });
+  const [error, setError] = useState("");
+  const companyId = localStorage.getItem("company_id");
 
-  const handlePostJob = () => {
-    // Logic to handle job post submission
-    console.log("Job posted");
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "jobImage") {
+      setJobData((prevData) => ({ ...prevData, jobImage: files[0] }));
+    } else {
+      setJobData((prevData) => ({ ...prevData, [name]: value }));
+    }
+  };
+
+  const handlePostJob = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!companyId) {
+      setError("Company ID not found. Please log in again.");
+      return;
+    }
+
+    const formData = new FormData();
+    for (const key in jobData) {
+      formData.append(key, jobData[key]);
+    }
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/job/company/${companyId}/addJob`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Job posted successfully:", response.data);
+      navigate("/companyJob"); // Navigate back to the company home page
+    } catch (err) {
+      console.error("Error posting job:", err);
+      setError("Failed to post job. Please try again.");
+    }
   };
 
   const handleGoBack = () => {
-    navigate("/companyHome"); // Navigate back to the company home page
+    navigate("/companyHome");
   };
-
-  const currentDate = new Date().toLocaleDateString("en-GB"); // Get the current date
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <CompanyNavbar /> {/* Render the Navbar */}
+      <CompanyNavbar />
       <div className="flex justify-center items-center mt-16">
-        {/* Adjusted width to match CompanyRegister.js */}
         <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-lg">
           <h2 className="text-teal-700 text-3xl font-bold text-center mb-4">
             Post Job
           </h2>
-          <p className="text-gray-500 text-center mb-6">{currentDate}</p>
-
-          {/* Job Posting Form */}
-          <form>
+          {error && <p className="text-red-500 text-center">{error}</p>}
+          <form onSubmit={handlePostJob}>
+            {[
+              { name: "jobTitle", label: "Job Title", type: "text" },
+              {
+                name: "jobDescription",
+                label: "Job Description",
+                type: "textarea",
+              },
+              { name: "location", label: "Location", type: "text" },
+              {
+                name: "reqOlPassCount",
+                label: "O/L Subjects Pass Count",
+                type: "number",
+              },
+              { name: "workingHours", label: "Working Hours", type: "number" },
+              { name: "Qualification", label: "Qualifications", type: "text" },
+            ].map(({ name, label, type }) => (
+              <div key={name} className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  {label}
+                </label>
+                {type === "textarea" ? (
+                  <textarea
+                    name={name}
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
+                    rows="4"
+                    placeholder={label}
+                    value={jobData[name]}
+                    onChange={handleChange}
+                  ></textarea>
+                ) : (
+                  <input
+                    type={type}
+                    name={name}
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
+                    placeholder={label}
+                    value={jobData[name]}
+                    onChange={handleChange}
+                  />
+                )}
+              </div>
+            ))}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Job Title
+                Job Image
               </label>
               <input
-                type="text"
+                type="file"
+                name="jobImage"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                placeholder="Job Title"
+                onChange={handleChange}
               />
             </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Job Description
-              </label>
-              <textarea
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                rows="4"
-                placeholder="Job Description"
-              ></textarea>
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Job Location
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                placeholder="Job Location"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                O/L Subjects Pass Count
-              </label>
-              <input
-                type="number"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                placeholder="O/L Subjects Pass Count"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Qualifications
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                placeholder="Qualifications"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Age
-              </label>
-              <input
-                type="number"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                placeholder="Age"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Working Hours
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-teal-500"
-                placeholder="Working Hours"
-              />
-            </div>
-
-            {/* Buttons */}
             <div className="flex justify-center space-x-4">
               <button
-                type="button"
-                onClick={handlePostJob}
+                type="submit"
                 className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600"
               >
                 Post Now
