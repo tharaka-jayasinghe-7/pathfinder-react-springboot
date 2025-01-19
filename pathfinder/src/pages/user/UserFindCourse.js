@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import UserNavbar from "../../components/user/UserNavbar"; // Adjust based on your folder structure
+import UserNavbar from "../../components/user/UserNavbar";
 import { useNavigate } from "react-router-dom";
 
 const UserFindCourse = () => {
   const [industry, setIndustry] = useState("Automobile");
-  const [timeType, setTimeType] = useState("Full time");
-  const [age, setAge] = useState("22");
-  const [subjectsCount, setSubjectsCount] = useState("7");
+  const [timeType, setTimeType] = useState("Full-time");
+  const [age, setAge] = useState(22); // Store as number
+
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Add your search logic here
-    console.log("Search clicked with:", {
-      industry,
-      timeType,
-      age,
-      subjectsCount,
+
+    // Redirect to UserViewCourses with query parameters
+    navigate("/userViewCourses", {
+      state: { industry, timeType, age },
     });
   };
 
@@ -23,8 +22,6 @@ const UserFindCourse = () => {
     // Add your back logic here (e.g., navigate back)
     console.log("Back button clicked");
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 mt-6">
@@ -49,27 +46,26 @@ const UserFindCourse = () => {
               <select
                 value={industry}
                 onChange={(e) => setIndustry(e.target.value)}
-                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg" // Increased height and font size
+                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg"
               >
                 <option value="Automobile">Automobile</option>
-                <option value="IT">IT</option>
-                <option value="Health">Health</option>
-                {/* Add more industries as needed */}
+                <option value="Construction">Construction</option>
+                <option value="Hotel">Hotel</option>
               </select>
             </div>
 
             {/* Full-time/Part-time */}
             <div className="mb-6">
               <label className="block text-gray-700 mb-2">
-                Full time/Part time
+                Full-time/Part-time
               </label>
               <select
                 value={timeType}
                 onChange={(e) => setTimeType(e.target.value)}
-                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg" // Increased height and font size
+                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg"
               >
-                <option value="Full time">Full time</option>
-                <option value="Part time">Part time</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
               </select>
             </div>
 
@@ -79,35 +75,16 @@ const UserFindCourse = () => {
               <input
                 type="number"
                 value={age}
-                onChange={(e) => setAge(e.target.value)}
+                onChange={(e) => setAge(parseInt(e.target.value, 10))} // Convert to number
                 min="18"
                 max="30"
-                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg px-4" // Increased height, font size, and padding
+                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg px-4"
               />
-            </div>
-
-            {/* O/L Subjects pass count */}
-            <div className="mb-8">
-              <label className="block text-gray-700 mb-2">
-                O/L Subjects pass count
-              </label>
-              <select
-                value={subjectsCount}
-                onChange={(e) => setSubjectsCount(e.target.value)}
-                className="w-full bg-gray-200 border-gray-300 rounded-md shadow-sm h-12 text-lg" // Increased height and font size
-              >
-                {[...Array(10).keys()].map((num) => (
-                  <option key={num} value={num + 1}>
-                    {num + 1}
-                  </option>
-                ))}
-              </select>
             </div>
 
             {/* Buttons */}
             <div className="flex justify-center space-x-2">
               <button
-                onClick={() => navigate("/userViewCourses")}
                 type="submit"
                 className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-md"
               >
@@ -116,7 +93,7 @@ const UserFindCourse = () => {
               <button
                 type="button"
                 onClick={handleBack}
-                className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-md "
+                className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-md"
               >
                 Back
               </button>

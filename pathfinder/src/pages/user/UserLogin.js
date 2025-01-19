@@ -9,7 +9,6 @@ const UserLogin = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Handle form submission
   const handleLogin = async () => {
     try {
       const response = await axios.post(
@@ -20,9 +19,7 @@ const UserLogin = () => {
         }
       );
 
-      // If login is successful, navigate to the user home page
       if (response.status === 200) {
-        // You can store the user data (like userId) in localStorage or a state management solution
         const userData = response.data;
 
         localStorage.setItem("user_id", userData.userId);
@@ -31,7 +28,6 @@ const UserLogin = () => {
         navigate("/userHome");
       }
     } catch (error) {
-      // Handle errors (e.g., invalid email/password)
       setError("Invalid email or password");
       console.error(error);
     }

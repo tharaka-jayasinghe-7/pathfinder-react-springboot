@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import UserLogin from "./pages/user/UserLogin";
 import CompanyLogin from "./pages/company/CompanyLogin";
-import CompanyRegister from "./pages/company/CompanyRegister"; // Import CompanyRegister
+import CompanyRegister from "./pages/company/CompanyRegister";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
@@ -19,6 +19,10 @@ import UserMyJobs from "./pages/user/UserMyJobs";
 import UserNotifications from "./pages/user/UserNotifications";
 import UserApplyJob from "./pages/user/UserApplyJob";
 import UserProfile from "./pages/user/UserProfile";
+import UserCompanies from "./pages/user/UserCompanies";
+import UserViewCompany from "./pages/user/UserViewCompany";
+import UserViewCompanyDetails from "./pages/user/UserViewCompanyDetails";
+import UserJobsByCompany from "./pages/user/UserJobsByCompany";
 
 const router = createBrowserRouter([
   {
@@ -74,8 +78,24 @@ const router = createBrowserRouter([
     element: <UserNotifications />,
   },
   {
+    path: "userCompanies",
+    element: <UserCompanies />,
+  },
+  {
     path: "userApplyJob/:jobId",
     element: <UserApplyJob />,
+  },
+  {
+    path: "userViewCompany/:companyId",
+    element: <UserViewCompany />,
+  },
+  {
+    path: "userJobsByCompany/:companyId",
+    element: <UserJobsByCompany />,
+  },
+  {
+    path: "userViewCompanyDetails/:companyId",
+    element: <UserViewCompanyDetails />,
   },
   {
     path: "companyHome",

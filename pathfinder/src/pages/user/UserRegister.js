@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const UserRegister = () => {
   });
 
   const fileInputRef = useRef(null); // Create a ref for the file input
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,9 +53,11 @@ const UserRegister = () => {
         }
       );
 
-      console.log("User registered successfully:", response.data);
+      alert("User registered successfully!"); // Display success message
+      navigate("/"); // Redirect to Landing.js
     } catch (error) {
       console.error("Error during registration:", error);
+      alert("Registration failed. Please try again."); // Show error message
     }
   };
 
@@ -197,15 +201,15 @@ const UserRegister = () => {
               onChange={handleInputChange}
               className="w-full px-4 py-2 border mb-4 rounded"
             >
-              <option value="Certification in welding">
-                Certification in welding
-              </option>
-              <option value="Certification in plumbing">
-                Certification in plumbing
-              </option>
-              <option value="Certification in electrical work">
-                Certification in electrical work
-              </option>
+              <option value="Welding NVQ 1">Welding NVQ 1</option>
+              <option value="Welding NVQ 2">Welding NVQ 2</option>
+              <option value="Welding NVQ 3">Welding NVQ 3</option>
+              <option value="Mechanic NVQ 1">Mechanic NVQ 1</option>
+              <option value="Mechanic NVQ 2">Mechanic NVQ 2</option>
+              <option value="Mechanic NVQ 3">Mechanic NVQ 3</option>
+              <option value="Chef NVQ 1">Chef NVQ 1</option>
+              <option value="Chef NVQ 2">Chef NVQ 2</option>
+              <option value="Chef NVQ 3">Chef NVQ 3</option>
             </select>
           </div>
 

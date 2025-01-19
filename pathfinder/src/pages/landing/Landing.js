@@ -1,13 +1,13 @@
 import React from "react";
-import Navbar from "../../components/landing/Navbar"; // Adjust path based on your project structure
-import lotusImage from "../../images/landing/lotus_tower3.jpg"; // Adjust path based on your project structure
-import welderImage from "../../images/landing/welder1.jpg"; // Adjust path based on your project structure
-import chefImage from "../../images/landing/chef1.jpg"; // Adjust path based on your project structure
-import mechanicImage from "../../images/landing/mechanic1.jpg"; // Adjust path based on your project structure
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import Navbar from "../../components/landing/Navbar";
+import lotusImage from "../../images/landing/lotus_tower4.jpg";
+import welderImage from "../../images/landing/welder1.jpg";
+import chefImage from "../../images/landing/chef1.jpg";
+import mechanicImage from "../../images/landing/mechanic1.jpg";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -44,16 +44,15 @@ const LandingPage = () => {
               land your dream job.
             </p>
             <button
-              onClick={() => navigate("/userLogin")} // Navigate to user login
+              onClick={() => navigate("/userLogin")}
               className="bg-blue-500 mb-3 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
             >
               Login Now
             </button>
             <ul className="flex space-x-4">
               <li>
-                {/* Navigate to company register */}
                 <button
-                  onClick={() => navigate("/userRegister")} // Adjust route for company registration
+                  onClick={() => navigate("/userRegister")}
                   className="text-orange-500 hover:text-orange-400"
                 >
                   Register Now
@@ -68,7 +67,7 @@ const LandingPage = () => {
               the best talents.
             </p>
             <button
-              onClick={() => navigate("/companyLogin")} // Navigate to company login
+              onClick={() => navigate("/companyLogin")}
               className="bg-blue-500 mb-3 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
             >
               Login Now
@@ -76,7 +75,7 @@ const LandingPage = () => {
             <ul className="flex space-x-4">
               <li>
                 <button
-                  onClick={() => navigate("/companyRegister")} // Adjust route for company registration
+                  onClick={() => navigate("/companyRegister")}
                   className="text-orange-500 hover:text-orange-400"
                 >
                   Register here

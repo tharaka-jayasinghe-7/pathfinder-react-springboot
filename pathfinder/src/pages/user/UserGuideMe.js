@@ -1,6 +1,6 @@
 import React from "react";
 import UserNavbar from "../../components/user/UserNavbar";
-import vImage from "../../images/landing/v_img.jpg";
+import vImage from "../../images/landing/v_img2.jpg";
 import { useNavigate } from "react-router-dom";
 
 const UserGuideMe = () => {
@@ -13,25 +13,9 @@ const UserGuideMe = () => {
 
       {/* Main Content */}
       <div className="flex-1">
-        {/* Hero Section */}
-
-        {/* Left Side with Text */}
-        <section
-          className="relative mt-8 bg-cover bg-center h-screen"
-          style={{
-            backgroundImage: `url(${vImage})`,
-          }}
-        >
-          <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold">
-              We are here to guide you to be the best version of you!
-            </h1>
-          </div>
-        </section>
-
         {/* Career Path Section */}
         <section className="py-16 bg-white text-center">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mt-32 mb-4 mx-auto">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">
               How to chose your career path?
             </h2>
@@ -59,13 +43,18 @@ const UserGuideMe = () => {
           </div>
         </section>
 
-        {/* Engineering Section */}
         <section
           className="relative mt-8 bg-cover bg-center h-screen"
           style={{
             backgroundImage: `url(${vImage})`,
           }}
-        ></section>
+        >
+          <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold">
+              We are here to guide you to be the best version of you!
+            </h1>
+          </div>
+        </section>
       </div>
     </div>
   );
