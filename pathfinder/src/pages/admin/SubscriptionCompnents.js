@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import NavbarUpdate from "../../components/landing/NavbarUpdate";
 import { addSubscription } from "../../services/SubscriptionService";
+import { useNavigate } from "react-router-dom";
 
 const SubscriptionCompnents = () => {
   const [duration, setDuration] = useState("");
   const [price, setPrice] = useState("");
   const [features, setFeatures] = useState("");
+  const navigate = useNavigate();
 
   function saveSubscription(e) {
     e.preventDefault(); // Fixed typo here
@@ -15,6 +17,7 @@ const SubscriptionCompnents = () => {
     addSubscription(subscription)
       .then((response) => {
         console.log(response.data);
+        navigate("/getSubscription");
       })
       .catch((error) => {
         console.error(error);

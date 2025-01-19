@@ -30,6 +30,7 @@ const AdminLogin = () => {
     } catch (error) {
       setError("Invaild email or password");
       console.error(error);
+      alert("Invalid email or password. Please try again.");
     }
   };
 

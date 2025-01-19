@@ -29,6 +29,7 @@ import CourseCompnents from "./pages/admin/CourseCompnents";
 import GetJobs from "./pages/admin/GetJobs";
 import AdminDashBoard from "./pages/admin/AdminDashBoard";
 import CompanyInterview from "./pages/company/CompanyInterview";
+import UpdateCourse from "./pages/admin/UpdateCourse";
 
 const router = createBrowserRouter([
   {
@@ -133,8 +134,12 @@ const router = createBrowserRouter([
     element: <AdminDashBoard />,
   },
   {
-    path: "/companyInterview/:jobId",
+    path: "/companyInterview/:companyId/job/:jobId",
     element: <CompanyInterview />,
+  },
+  {
+    path: "/updateCourse/:courseId",
+    element: <UpdateCourse />,
   },
 ]);
 

@@ -20,13 +20,20 @@ const GetJobs = () => {
   }
 
   function removeJob(jobId) {
-    deleteJob(jobId)
-      .then((response) => {
-        jobList();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // Show confirmation alert
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this job?"
+    );
+
+    if (isConfirmed) {
+      deleteJob(jobId)
+        .then((response) => {
+          jobList();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   return (

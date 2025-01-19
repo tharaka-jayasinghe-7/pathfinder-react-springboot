@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CourseCompnents = () => {
   const [courseName, setCourseName] = useState("");
@@ -13,6 +14,8 @@ const CourseCompnents = () => {
   const [nvqLevel, setNvqLevel] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
+
+  const navigate = useNavigate();
 
   const saveCourse = async (e) => {
     e.preventDefault();
@@ -37,6 +40,8 @@ const CourseCompnents = () => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
       console.log("Course added successfully:", response.data);
+      alert("Course added successfully!");
+      navigate("/getCourse");
     } catch (error) {
       console.error("Error adding course:", error);
     }
@@ -215,14 +220,18 @@ const CourseCompnents = () => {
               >
                 Type
               </label>
-              <input
-                type="text"
+              <select
                 name="type"
                 value={type}
-                placeholder="Enter course type"
                 className="w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500"
                 onChange={(e) => setType(e.target.value)}
-              />
+              >
+                <option value="" disabled>
+                  Select course type
+                </option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+              </select>
             </div>
 
             <div>

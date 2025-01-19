@@ -24,17 +24,27 @@ const GetCourse = () => {
   }
 
   function removeCourse(courseId) {
-    deleteCourse(courseId)
-      .then((response) => {
-        listCourses();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // Confirm the action before proceeding
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this course?"
+    );
+    if (confirmDelete) {
+      deleteCourse(courseId)
+        .then((response) => {
+          listCourses(); // Refresh the course list
+        })
+        .catch((error) => {
+          console.error(error); // Log any error
+        });
+    }
   }
 
   function addCourse() {
     navigate("/addNewCourse");
+  }
+
+  function updateCourse(courseId) {
+    navigate(`/updateCourse/${courseId}`);
   }
 
   return (
@@ -91,6 +101,12 @@ const GetCourse = () => {
                     <td className="py-2 px-4">{course.duration}</td>
                     <td className="py-2 px-4">{course.nvqLevel}</td>
                     <td className="py-2 px-4">{course.type}</td>
+                    <button
+                      onClick={() => updateCourse(course.courseId)}
+                      className="bg-yellow-500 text-white px-2 py-1 text-sm rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 mr-2"
+                    >
+                      Update
+                    </button>
 
                     <button
                       onClick={() => removeCourse(course.courseId)}

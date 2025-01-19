@@ -21,13 +21,19 @@ const GetUser = () => {
   }
 
   function removeUser(userId) {
-    deleteUser(userId)
-      .then((response) => {
-        listUsers();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // Confirm the action before proceeding
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (confirmDelete) {
+      deleteUser(userId)
+        .then((response) => {
+          listUsers(); // Refresh the user list
+        })
+        .catch((error) => {
+          console.log(error); // Log any error
+        });
+    }
   }
 
   return (

@@ -21,13 +21,19 @@ const GetCompanies = () => {
   }
 
   function removeCompany(companyId) {
-    deleteCompany(companyId)
-      .then((response) => {
-        listCompanies();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // Show confirmation alert
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this company?"
+    );
+    if (isConfirmed) {
+      deleteCompany(companyId)
+        .then((response) => {
+          listCompanies();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   return (

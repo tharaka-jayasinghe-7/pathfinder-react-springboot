@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CompanyNavbar from "../../components/company/CompanyNavbar";
 import axios from "axios";
-import { deleteJob } from "../../services/jobService";
 
 function CompanyJob() {
   const navigate = useNavigate();
@@ -49,18 +48,17 @@ function CompanyJob() {
     );
   }
 
-  // Function to handle the "View Job" button click
-
   // Function to handle the "Add Job" button click
   const handleAddJob = () => {
     navigate("/companyAddJob");
   };
 
-  const handleInvite = (jobId) => {
-    navigate(`/companyInterview/${jobId}`);
+  // Function to handle the "Create Invite" button click
+  const handleInvite = (companyId, jobId) => {
+    navigate(`/companyInterview/${companyId}/job/${jobId}`);
   };
 
-  // Function to handle the "Update Job" button click
+  // Function to handle the "Delete Job" button click
   const handleDeleteJob = async (jobId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this job?"
@@ -76,8 +74,7 @@ function CompanyJob() {
 
         if (response.ok) {
           alert("Job deleted successfully!");
-          // Optionally, refresh the job list
-          window.location.reload();
+          setJobs(jobs.filter((job) => job.jobId !== jobId)); // Remove deleted job from the list
         } else {
           alert("Failed to delete the job. Please try again.");
         }
@@ -126,16 +123,16 @@ function CompanyJob() {
               <p className="text-sm text-gray-500">
                 Date: {new Date(job.jobDate).toLocaleDateString()}
               </p>
-              <div className="mt-4">
+              <div className="mt-4 flex flex-col gap-2">
                 <button
-                  className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 mt-2"
+                  className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
                   onClick={() => handleDeleteJob(job.jobId)}
                 >
                   Delete Job
                 </button>
                 <button
-                  className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 mt-2"
-                  onClick={() => handleInvite(job.jobId)}
+                  className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600"
+                  onClick={() => handleInvite(companyId, job.jobId)}
                 >
                   Create Invite
                 </button>

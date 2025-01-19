@@ -26,13 +26,20 @@ const GetSubscription = () => {
   }
 
   function removeSubscription(subscriptionId) {
-    deleteSubscription(subscriptionId)
-      .then((response) => {
-        listSubcriptions();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // Show confirmation alert
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this subscription?"
+    );
+
+    if (isConfirmed) {
+      deleteSubscription(subscriptionId)
+        .then((response) => {
+          listSubcriptions();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   function addNewSubcription() {
@@ -79,6 +86,14 @@ const GetSubscription = () => {
                     <td className="py-2 px-4">{subscription.duration}</td>
                     <td className="py-2 px-4">{subscription.price}</td>
                     <td className="py-2 px-4">{subscription.features}</td>
+                    <button
+                      onClick={() =>
+                        updateSubscription(subscription.subscriptionId)
+                      }
+                      className="bg-yellow-500 text-white px-2 py-1 text-sm rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 mr-2"
+                    >
+                      Update
+                    </button>
                     <button
                       onClick={() =>
                         removeSubscription(subscription.subscriptionId)
