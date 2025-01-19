@@ -5,6 +5,7 @@ import App from "./App";
 import UserLogin from "./pages/user/UserLogin";
 import CompanyLogin from "./pages/company/CompanyLogin";
 import CompanyRegister from "./pages/company/CompanyRegister";
+import CompanyRegister from "./pages/company/CompanyRegister";
 import ViewProfile from "./pages/company/ViewProfile";
 import AboutUs from "./pages/company/Aboutus";
 import CompanyJob from "./pages/company/CompanyJob";
@@ -14,6 +15,20 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "./pages/user/UserHome";
 import UserJobs from "./pages/user/UserJobs";
+import UserViewJob from "./pages/user/UserViewJob";
+import CompanyHome from "./pages/company/CompanyHome";
+import UserRegister from "./pages/user/UserRegister";
+import UserGuideMe from "./pages/user/UserGuideMe";
+import UserFindCourse from "./pages/user/UserFindCourse";
+import UserViewCourses from "./pages/user/UserViewCourses";
+import UserMyJobs from "./pages/user/UserMyJobs";
+import UserNotifications from "./pages/user/UserNotifications";
+import UserApplyJob from "./pages/user/UserApplyJob";
+import UserProfile from "./pages/user/UserProfile";
+import UserCompanies from "./pages/user/UserCompanies";
+import UserViewCompany from "./pages/user/UserViewCompany";
+import UserViewCompanyDetails from "./pages/user/UserViewCompanyDetails";
+import UserJobsByCompany from "./pages/user/UserJobsByCompany";
 import CompanyAddJob from "./pages/company/CompanyAddJob";
 import CompanyUpdateJob from "./pages/company/CompanyUpdateJob";
 import CompanyPackage from "./pages/company/CompanyPackage";
@@ -39,6 +54,14 @@ const router = createBrowserRouter([
   {
     path: "userLogin",
     element: <UserLogin />,
+  },
+  {
+    path: "userRegister",
+    element: <UserRegister />,
+  },
+  {
+    path: "userProfile/:userId",
+    element: <UserProfile />,
   },
   {
     path: "companyLogin",
@@ -74,6 +97,8 @@ const router = createBrowserRouter([
     element: <CompanyJob />,
   },
   {
+    path: "userViewJob/:jobId",
+    element: <UserViewJob />,
     path: "companyNot", // Route for Company Notifications
     element: <CompanyNot />, // Reference the CompanyNot component
   },
@@ -98,16 +123,36 @@ const router = createBrowserRouter([
     element: <GetCompanies />,
   },
   {
-    path: "/getUsers",
-    element: <GetUser />,
+    path: "userCompanies",
+    element: <UserCompanies />,
   },
   {
-    path: "/getSubscription",
-    element: <GetSubscription />,
+    path: "userApplyJob/:jobId",
+    element: <UserApplyJob />,
   },
   {
-    path: "/getPayment",
-    element: <GetPayment />,
+    path: "userViewCompany/:companyId",
+    element: <UserViewCompany />,
+  },
+  {
+    path: "userJobsByCompany/:companyId",
+    element: <UserJobsByCompany />,
+  },
+  {
+    path: "userViewCompanyDetails/:companyId",
+    element: <UserViewCompanyDetails />,
+  },
+  {
+    path: "userViewCompany/:companyId",
+    element: <UserViewCompany />,
+  },
+  {
+    path: "userJobsByCompany/:companyId",
+    element: <UserJobsByCompany />,
+  },
+  {
+    path: "userViewCompanyDetails/:companyId",
+    element: <UserViewCompanyDetails />,
   },
   {
     path: "/addNewSubscription",

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserNavbar from "../../components/user/UserNavbar";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-const UserJobs = () => {
+const UserJobsByCompany = () => {
   const navigate = useNavigate();
+  const { companyId } = useParams();
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ const UserJobs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/job/getJobs")
+      .get(`http://localhost:8080/job/company/${companyId}/jobs`)
       .then((response) => {
         setJobs(response.data);
         setFilteredJobs(response.data);
@@ -24,7 +25,7 @@ const UserJobs = () => {
         setError("Error fetching jobs data");
         setLoading(false);
       });
-  }, []);
+  }, [companyId]);
 
   // Handle filtering based on dropdown selection
   const handleSearch = () => {
@@ -126,4 +127,4 @@ const UserJobs = () => {
   );
 };
 
-export default UserJobs;
+export default UserJobsByCompany;
