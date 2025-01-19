@@ -1,44 +1,46 @@
-import React, { useState } from "react";
-import Navbar from "../../components/landing/Navbar";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/landing/Navbar";
+import NavbarUpdate from "../../components/landing/NavbarUpdate";
+import NavbarLogin from "../../components/landing/NavbarLogin";
 
-const CompanyLogin = () => {
+const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/company/companyLogin",
-        null,
+        "http://localhost:8080/admin/adminLogin",
+        { email, password },
         {
-          params: { email, password },
+          headers: {
+            "Content-Type": "application/json", // Explicitly set content type
+          },
         }
       );
 
-      if (response.status === 200) {
-        const companyData = response.data;
-        localStorage.setItem("company_id", companyData.companyId);
-        localStorage.setItem("company_email", companyData.email);
-        console.log("User Logged in", response.data);
-        navigate("/companyHome");
+      if (response.status == 200) {
+        console.log("User Logged In", response.data);
+        navigate("/adminDashboard");
       }
     } catch (error) {
-      setError("Invalid email or password");
+      setError("Invaild email or password");
       console.error(error);
+      alert("Invalid email or password. Please try again.");
     }
   };
 
   return (
     <div>
-      <Navbar />
+      <NavbarLogin />
       <div className="min-h-screen bg-gray-200 flex flex-col justify-center items-center">
         <div className="bg-white shadow-md rounded-lg w-[400px] py-8 px-6 mt-1">
           <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">
-            Company Login
+            Admin Login
           </h2>
 
           <div className="mb-4">
@@ -89,4 +91,4 @@ const CompanyLogin = () => {
   );
 };
 
-export default CompanyLogin;
+export default AdminLogin;

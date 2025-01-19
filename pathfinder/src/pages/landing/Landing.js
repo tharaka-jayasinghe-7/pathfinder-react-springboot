@@ -52,6 +52,7 @@ const LandingPage = () => {
             <ul className="flex space-x-4">
               <li>
                 <button
+                  onClick={() => navigate("/companyRegister")} // Adjust route for company registration
                   onClick={() => navigate("/userRegister")}
                   className="text-orange-500 hover:text-orange-400"
                 >

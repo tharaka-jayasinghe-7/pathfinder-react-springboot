@@ -2,8 +2,13 @@ import React from "react";
 import pathfinderLogo from "../../images/landing/logo.png";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const NavbarUpdate = () => {
   const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    navigate("/");
+  };
+
   return (
     <nav className="bg-teal-700 p-4 fixed top-0 left-0 w-full z-50">
       <div className="flex justify-between items-center w-full">
@@ -18,10 +23,10 @@ const Navbar = () => {
         <ul className="flex space-x-4 mr-4">
           <li>
             <button
-              onClick={() => navigate("/adminLogin")}
+              onClick={handleSignOut}
               className="bg-teal-700 text-white px-4 py-2 rounded hover:bg-teal-600 transition"
             >
-              Admin Login
+              Sign Out
             </button>
           </li>
         </ul>
@@ -30,4 +35,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarUpdate;

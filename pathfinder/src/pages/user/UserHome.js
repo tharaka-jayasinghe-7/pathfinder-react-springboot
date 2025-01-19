@@ -69,10 +69,7 @@ const UserHome = () => {
         >
           View Profile
         </button>
-        <button
-          onClick={() => navigate("/")}
-          className="bg-red-600 text-white py-2 px-6 rounded-lg"
-        >
+        <button className="bg-red-500 text-white py-2 px-6 rounded-lg">
           Log Out
         </button>
       </div>
