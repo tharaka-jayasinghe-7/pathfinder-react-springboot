@@ -1,14 +1,33 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from react-router-dom
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import pathfinderLogo from "../../images/landing/logo.png";
-import userProfileImage from "../../images/landing/profile_pic.jpg"; // Import user profile image
+import userProfileImage from "../../images/landing/profile_pic.jpg";
 
 const UserNavbar = () => {
-  // Get the current route path using useLocation
   const location = useLocation();
   const userId = localStorage.getItem("user_id");
 
-  // Map routes to the active item names
+  // State to store the number of notifications
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  // Fetch notifications count
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/interview/getNotificationsByUser/${userId}`
+        );
+        const data = await response.json();
+        setNotificationCount(data.length); // Assuming the response contains an array of notifications
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    fetchNotifications();
+  }, [userId]);
+
+  // Get the active item based on the current location
   const getActiveItem = () => {
     switch (location.pathname) {
       case "/userHome":
@@ -21,15 +40,16 @@ const UserNavbar = () => {
         return "My Jobs";
       case "/userNotifications":
         return "Notifications";
+      case "/userCompanies":
+        return "Companies";
       default:
-        return "Home"; // Default to Home if path is not recognized
+        return null; // Return null for pages not in the navbar
     }
   };
 
-  // Track the active menu item based on the current route
-  const [activeItem, setActiveItem] = React.useState(getActiveItem());
+  const [activeItem, setActiveItem] = useState(getActiveItem());
 
-  // Update activeItem whenever the route changes
+  // Update active item whenever location changes
   useEffect(() => {
     setActiveItem(getActiveItem());
   }, [location.pathname]);
@@ -53,18 +73,30 @@ const UserNavbar = () => {
             { name: "Guide Me", path: "/userGuideMe" },
             { name: "Jobs", path: "/userJobs" },
             { name: "My Jobs", path: "/userMyJobs" },
-            { name: "Notifications", path: "/userNotifications" },
+            {
+              name: "Notifications",
+              path: "/userNotifications",
+              notificationCount: notificationCount,
+            },
+            { name: "Companies", path: "/userCompanies" },
           ].map((item) => (
             <div key={item.name} className="relative">
               <Link
-                to={item.path} // Assign corresponding path
+                to={item.path}
                 className={`text-white hover:text-gray-300 ${
                   activeItem === item.name ? "text-orange-500" : ""
                 }`}
-                onClick={() => setActiveItem(item.name)} // Manually set active item
+                onClick={() => setActiveItem(item.name)}
               >
                 {item.name}
               </Link>
+              {/* Show notification count circle only for "Notifications" item */}
+              {item.name === "Notifications" && item.notificationCount > 0 && (
+                <div className="absolute right-[-18px] top-[-5px] flex items-center justify-center bg-green-500 text-white rounded-full w-5 h-5 text-xs font-bold">
+                  {item.notificationCount}
+                </div>
+              )}
+
               {activeItem === item.name && (
                 <div className="absolute inset-x-0 bottom-0 h-1 bg-orange-500"></div>
               )}
@@ -74,11 +106,11 @@ const UserNavbar = () => {
 
         {/* Profile Image on the right */}
         <div className="flex items-center">
-          <Link to="/userProfile/${user.userId}">
+          <Link to={`/userProfile/${userId}`}>
             <img
               src={`http://localhost:8080/user/${userId}/image`}
               alt="User Profile"
-              className="w-10 h-10 rounded-full border-1 border-white ml-4 mr-4" // Circle with border
+              className="w-10 h-10 rounded-full border-1 border-white ml-4 mr-4"
             />
           </Link>
         </div>

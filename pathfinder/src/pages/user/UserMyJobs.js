@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
-import UserNavbar from "../../components/user/UserNavbar"; // Importing the UserNavbar
+import UserNavbar from "../../components/user/UserNavbar";
 import axios from "axios";
 
 const UserMyJobs = () => {
-  const [jobs, setJobs] = useState([]); // State to hold the fetched jobs
+  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const userId = localStorage.getItem("user_id");
-  console.log("User ID:", userId); // Log user ID
+  console.log("User ID:", userId);
 
-  // Fetch applies by user ID
   useEffect(() => {
     const fetchUserJobs = async () => {
       try {
         setLoading(true);
 
-        // Step 1: Fetch applies for the user
         const applyResponse = await axios.get(
           `http://localhost:8080/apply/getAppliesByUser/${userId}`
         );
         const applies = applyResponse.data;
-        console.log("Applies:", applies); // Log applies response
+        console.log("Applies:", applies);
 
         if (applies.length === 0) {
           setError("No applications found for this user.");
@@ -29,28 +27,25 @@ const UserMyJobs = () => {
           return;
         }
 
-        // Step 2: Fetch job and company details for each apply
         const jobDetails = await Promise.all(
           applies.map(async (apply) => {
-            const jobId = apply.jobId; // Get the jobId from the apply object
-            console.log("Job ID:", jobId); // Log job ID
+            const jobId = apply.jobId;
+            console.log("Job ID:", jobId);
 
-            // Fetch job details using jobId
             const jobResponse = await axios.get(
               `http://localhost:8080/job/getJob/${jobId}`
             );
             const job = jobResponse.data;
-            console.log("Job Details:", job); // Log job details
+            console.log("Job Details:", job);
 
-            const companyId = job.companyId; // Assign companyId to a variable
-            console.log("Company ID:", companyId); // Log company ID
+            const companyId = job.companyId;
+            console.log("Company ID:", companyId);
 
-            // Fetch company details using companyId
             const companyResponse = await axios.get(
               `http://localhost:8080/company/getcompany/${companyId}`
             );
             const company = companyResponse.data;
-            console.log("Company Details:", company); // Log company details
+            console.log("Company Details:", company);
 
             return {
               id: job.jobId,
@@ -62,7 +57,6 @@ const UserMyJobs = () => {
           })
         );
 
-        // Filter out null values (if any apply had no job)
         setJobs(jobDetails.filter((job) => job !== null));
       } catch (err) {
         console.error("Error fetching data:", err);

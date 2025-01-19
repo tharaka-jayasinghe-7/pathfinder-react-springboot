@@ -9,7 +9,7 @@ const UserApplyJob = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [job, setJob] = useState(null); // State to hold job details
+  const [job, setJob] = useState(null);
   const [company, setCompany] = useState(null);
 
   // State to hold form data
